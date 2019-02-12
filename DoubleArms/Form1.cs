@@ -43,6 +43,8 @@ namespace DoubleArms
         private void FormView_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.FillRectangle(Brushes.BlueViolet, arm1_x, arm1_y, arm1_width, arm1_height);
+
+            e.Graphics.FillRectangle(Brushes.BlueViolet, 50,50,50,50);
         }
     }
 }
