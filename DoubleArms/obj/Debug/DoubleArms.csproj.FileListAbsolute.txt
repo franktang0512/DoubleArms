@@ -1,0 +1,9 @@
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\bin\Debug\DoubleArms.exe.config
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\bin\Debug\DoubleArms.exe
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\bin\Debug\DoubleArms.pdb
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csprojResolveAssemblyReference.cache
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.Form1.resources
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.Properties.Resources.resources
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csproj.GenerateResource.Cache
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.exe
+C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.pdb
