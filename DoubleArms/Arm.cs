@@ -12,8 +12,7 @@ namespace DoubleArms
         Z_axis zaxis;
 
         Arm() {
-            xaxis = X_axis.getXaxis();
-            zaxis = Z_axis.getZaxis();
+
         }
 
         public static Arm CreateArm() {
@@ -52,24 +51,12 @@ namespace DoubleArms
         public const int z = 100;
         X_axis(){
         
-        }
-
-        public static X_axis getXaxis()
-        {
-            return new X_axis();
-        }
-
-
-    
+        }    
     }
     class Z_axis{
         public int x, z;
         Z_axis() { }
-        public static Z_axis getZaxis()
-        {
-            return new Z_axis();
-        }
-        
+     
     }
 }
         

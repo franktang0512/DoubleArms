@@ -35,6 +35,7 @@
             // ForArm1
             // 
             this.ForArm1.Enabled = true;
+            this.ForArm1.Interval = 1000;
             this.ForArm1.Tick += new System.EventHandler(this.ForArm1_Tick);
             // 
             // Form1
