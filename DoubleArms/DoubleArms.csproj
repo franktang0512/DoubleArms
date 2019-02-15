@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arm.cs" />
+    <Compile Include="Food.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="FoodCreator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -14,6 +14,8 @@ namespace DoubleArms
         //z軸的資訊
         public int zaxis_X, zaxis_Z, zaxis_Width, zaxis_Height;
 
+        public int seize;
+
         public Arm(string armside,int xx, int xz, int zx, int zz) {
             arm_side = armside;
             //x軸原來大小
@@ -57,13 +59,10 @@ namespace DoubleArms
         
         }
         public void R_Left()
-        {
-
-            
+        {            
             zaxis_X--;
             xaxis_X--;
             xaxis_Width++;
-
         }
         public void Right()
         {
@@ -86,11 +85,14 @@ namespace DoubleArms
             zaxis_X++;
             xaxis_X++;
         }
-        public void Stop() { }
-
         /****************************************************/
-        void Seize() { }
-        void Release() { }
+        public void  Seize() {
+            seize = 1;
+
+        }
+        public void Release() {
+            seize = 2;
+        }
 
         void Create() { }
         void Remove() { }

@@ -14,9 +14,11 @@ namespace DoubleArms
     {
 
         int virtical = 0, parall = 0,virtical_r = 0, parall_r = 0;
+        int lockcount = 0;
         Arm LeftArm;
         Arm RightArm;
-
+        Food LeftFood = new Food();
+        Food tranFood = new Food();
         public Form1()
         {
             InitializeComponent();
@@ -27,57 +29,82 @@ namespace DoubleArms
 
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            
-            
-            if (LeftArm.xaxis_X + LeftArm.xaxis_Width > this.panel2.Width / 2 - 40)
-            {
-                Config.lockcount = 1;            
-            }
-            if (LeftArm.xaxis_X + LeftArm.xaxis_Width == this.panel2.Width / 2 - 40 && parall==2)
-            {
-                Config.lockcount = 0;
-            }
-            if (RightArm.xaxis_X < this.panel2.Width / 2 + 40)
-            {
-                Config.lockcount = 2;
-            }
-            if (RightArm.xaxis_X == this.panel2.Width / 2 + 40&&parall_r==1)
-            {
-                Config.lockcount = 0;
-            }
+            //Console.WriteLine("[{0}]",Config.lockcount);
 
-            if (Config.lockcount == 0)
+            //Console.WriteLine(LeftFood.X + "," + LeftFood.Z);
+            //Console.WriteLine(LeftArm.seize);
+
+            BalanceWorking();
+            if (LeftArm.seize == 1)
             {
-                Console.WriteLine("-----------------");
-                LeftArmWorking();
-                RightArmWoking();
-
+                LeftFood.X = LeftArm.zaxis_X;
+                LeftFood.Z = LeftArm.zaxis_Z + LeftArm.zaxis_Height;
             }
-            else {
-               
-                if (Config.lockcount == 1 /*&& RightArm.xaxis_X == this.panel2.Width / 2 + 40 && parall_r == 2*/) {
-                    LeftArmWorking();
+            if (LeftArm.seize == 2) {
 
-                    //if (RightArm.xaxis_X > this.panel2.Width / 2 + 40)
-                    //{
-                    //    Console.WriteLine("--------------"+RightArm.xaxis_X);
-                    //    RightArmWoking();
-                    //}
-                }else if (Config.lockcount == 2 /*&& LeftArm.xaxis_X + LeftArm.xaxis_Width == this.panel2.Width / 2 - 40 && parall == 1*/) {
-                    RightArmWoking();
-                    //if (LeftArm.xaxis_X + LeftArm.xaxis_Width < this.panel2.Width / 2 - 40) {
-                    //    Console.WriteLine("********************");
-                    //    LeftArmWorking();
-                    //}
-                }
-                
+                LeftFood.X = (this.panel2.Width - 15) / 2;
+                LeftFood.Z = 105;
             
             }
-
             this.panel2.Invalidate();
 
 
 
+        }
+
+        void BalanceWorking() {
+            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40)
+            {
+                lockcount = 1;
+            }
+            if (LeftArm.xaxis_X + LeftArm.xaxis_Width == this.panel2.Width / 2 - 40)
+            {
+                lockcount = 0;
+            }
+            if (RightArm.zaxis_X + 2 < this.panel2.Width / 2 + 40)
+            {
+                lockcount = 2;
+            }
+            if (RightArm.xaxis_X == this.panel2.Width / 2 + 40)
+            {
+                lockcount = 0;
+            }
+
+            if (lockcount == 0)
+            {
+                LeftArmWorking();
+
+                RightArmWoking();
+
+            }
+            else
+            {
+
+                if (lockcount == 1)
+                {
+                    LeftArmWorking();
+
+                    if (RightArm.xaxis_X >= this.panel2.Width / 2 + 40)
+                    {
+                        RightArmWoking();
+
+
+                    }
+
+                }
+                else if (lockcount == 2)
+                {
+                    RightArmWoking();
+
+                    if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40)
+                    {
+                        LeftArmWorking();
+
+                    }
+                }
+
+
+            }
         }
         void LeftArmWorking() {
             /********************************左手臂*************************************/
@@ -109,7 +136,17 @@ namespace DoubleArms
                 if (parall == 0 && virtical == 2) { LeftArm.UP(); }
 
             }
-            if (LeftArm.zaxis_Z == 41) { virtical = 2; }
+            if (LeftArm.zaxis_Z == 41) {
+                /*/****/////////
+                virtical = 2;
+                if (LeftArm.zaxis_X == 65) {
+                    LeftArm.Seize();                 
+                }
+                if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2) {
+                    LeftArm.Release(); 
+                }
+                
+            }
             if (LeftArm.xaxis_X + LeftArm.xaxis_Width < (this.panel2.Width + 15) / 2 && parall == 1 && virtical == 0) { LeftArm.Right(); }
 
             if (LeftArm.xaxis_X + LeftArm.xaxis_Width == (this.panel2.Width + 15) / 2 && parall == 1 && virtical == 0)
@@ -206,9 +243,11 @@ namespace DoubleArms
 
 
             //food
-            e.Graphics.FillRectangle(Brushes.Peru, 65, 105, 15, 10);
 
-            e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width / 2 - 15 / 2 , 105, 15, 10);
+
+            e.Graphics.FillRectangle(Brushes.Peru,LeftFood.X, LeftFood.Z,LeftFood.Width,LeftFood.Height);
+
+            //e.Graphics.FillRectangle(Brushes.Peru, (this.panel2.Width -20) / 2, 105, 15, 10);
 
             e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width - 80, 105, 15, 10);
 
