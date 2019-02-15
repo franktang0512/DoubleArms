@@ -9,6 +9,12 @@ namespace DoubleArms
     class Food
     {
         public int X, Z, Width, Height;
+        public Food(string prefix) {
+            if (prefix.Equals("front")) { }
+            if (prefix.Equals("middle")) { }
+        
+        }
+
         public Food()
         {
             X = 65;
@@ -22,8 +28,5 @@ namespace DoubleArms
             X = x;
             Z = z;
         }
-        
-
-
     }
 }
