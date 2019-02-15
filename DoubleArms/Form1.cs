@@ -13,24 +13,78 @@ namespace DoubleArms
     public partial class Form1 : Form
     {
 
-        int virtical = 0, parall = 0;
+        int virtical = 0, parall = 0,virtical_r = 0, parall_r = 0;
         Arm LeftArm;
         Arm RightArm;
 
         public Form1()
         {
             InitializeComponent();
-            LeftArm = new Arm(0, 40, 65, 0);
-            RightArm = new Arm(this.panel2.Width - 80, 40, this.panel2.Width - 80, 0);
+            LeftArm = new Arm("",0, 40, 65, 0);
+            RightArm = new Arm("",this.panel2.Width - 80, 40, this.panel2.Width - 80, 0);
+            ForArm1.Stop();
         }
 
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("{0},{1}", parall, virtical);
+            
+            
+            if (LeftArm.xaxis_X + LeftArm.xaxis_Width > this.panel2.Width / 2 - 40)
+            {
+                Config.lockcount = 1;            
+            }
+            if (LeftArm.xaxis_X + LeftArm.xaxis_Width == this.panel2.Width / 2 - 40 && parall==2)
+            {
+                Config.lockcount = 0;
+            }
+            if (RightArm.xaxis_X < this.panel2.Width / 2 + 40)
+            {
+                Config.lockcount = 2;
+            }
+            if (RightArm.xaxis_X == this.panel2.Width / 2 + 40&&parall_r==1)
+            {
+                Config.lockcount = 0;
+            }
 
+            if (Config.lockcount == 0)
+            {
+                Console.WriteLine("-----------------");
+                LeftArmWorking();
+                RightArmWoking();
+
+            }
+            else {
+               
+                if (Config.lockcount == 1 /*&& RightArm.xaxis_X == this.panel2.Width / 2 + 40 && parall_r == 2*/) {
+                    LeftArmWorking();
+
+                    //if (RightArm.xaxis_X > this.panel2.Width / 2 + 40)
+                    //{
+                    //    Console.WriteLine("--------------"+RightArm.xaxis_X);
+                    //    RightArmWoking();
+                    //}
+                }else if (Config.lockcount == 2 /*&& LeftArm.xaxis_X + LeftArm.xaxis_Width == this.panel2.Width / 2 - 40 && parall == 1*/) {
+                    RightArmWoking();
+                    //if (LeftArm.xaxis_X + LeftArm.xaxis_Width < this.panel2.Width / 2 - 40) {
+                    //    Console.WriteLine("********************");
+                    //    LeftArmWorking();
+                    //}
+                }
+                
+            
+            }
+
+            this.panel2.Invalidate();
+
+
+
+        }
+        void LeftArmWorking() {
+            /********************************左手臂*************************************/
             if (LeftArm.zaxis_Z == 0)
             {
                 if (parall == 0 && virtical == 0) { virtical = 1; }
+
                 if (parall == 2 && virtical == 0)
                 {
                     LeftArm.Left();
@@ -56,32 +110,66 @@ namespace DoubleArms
 
             }
             if (LeftArm.zaxis_Z == 41) { virtical = 2; }
-            if (LeftArm.zaxis_Z + LeftArm.zaxis_Width < (this.panel2.Width + 15) / 2 && parall == 1 && virtical == 0) { LeftArm.Right(); }
+            if (LeftArm.xaxis_X + LeftArm.xaxis_Width < (this.panel2.Width + 15) / 2 && parall == 1 && virtical == 0) { LeftArm.Right(); }
 
             if (LeftArm.xaxis_X + LeftArm.xaxis_Width == (this.panel2.Width + 15) / 2 && parall == 1 && virtical == 0)
             {
                 parall = 0;
                 virtical = 1;
             }
+            /*********************************************************************/
+        }
 
+        void RightArmWoking() {
+            /********************************右手臂*************************************/
+            if (RightArm.zaxis_Z == 0)
+            {
+                if (parall_r == 0 && virtical_r == 0) { parall_r = 2; }
+                if (parall_r == 2 && virtical_r == 0)
+                {
+                    if (RightArm.xaxis_X == (this.panel2.Width - 15) / 2)
+                    {
+                        parall_r = 0;
+                        virtical_r = 1;
+                    }
+                    RightArm.R_Left();
 
+                }
 
+                if (parall_r == 0 && virtical_r == 2)
+                {
+                    parall_r = 1;
+                    virtical_r = 0;
+                    if (RightArm.xaxis_X == this.panel2.Width - 80) { parall_r = 2; virtical_r = 0; }
+                }
+                if (parall_r == 1 && virtical_r == 0)
+                {
+                    RightArm.R_Right();
+                }
 
-            this.panel2.Invalidate();
+            }
 
-            //arm1_width += 1;
-            //M += 1;
-            //if (imove == 0)
-            //{
-            //    N += 10;
-            //    imove = 1;
-            //}
-            //else {
-            //    N -= 10;
-            //    imove = 0;
-            //}
+            if (RightArm.zaxis_Z <= 41)
+            {
+                if (parall_r == 0 && virtical_r == 1) { RightArm.Down(); }
+                if (parall_r == 0 && virtical_r == 2) { RightArm.UP(); }
 
+            }
+            if (RightArm.zaxis_Z == 41) { virtical_r = 2; }
 
+            if (RightArm.xaxis_X == this.panel2.Width - 80 && parall_r == 1 && virtical_r == 0)
+            {
+                parall_r = 0;
+                virtical_r = 1;
+            }
+            if (RightArm.xaxis_X > (this.panel2.Width - 15) / 2 && parall_r == 2 && virtical_r == 0) { RightArm.R_Left(); }
+
+            if (RightArm.xaxis_X == (this.panel2.Width - 15) / 2 && parall_r == 2 && virtical_r == 0)
+            {
+                parall_r = 0;
+                virtical_r = 1;
+            }
+            /*********************************************************************/
         }
 
         private void FormView_Paint(object sender, PaintEventArgs e)
@@ -120,12 +208,33 @@ namespace DoubleArms
             //food
             e.Graphics.FillRectangle(Brushes.Peru, 65, 105, 15, 10);
 
-            e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width / 2 - 15 / 2 + 10, 105, 15, 10);
+            e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width / 2 - 15 / 2 , 105, 15, 10);
 
             e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width - 80, 105, 15, 10);
 
 
             //e.Graphics.FillRectangle(Brushes.Peru, this.Width - 100, 250, 30, 10);
+        }
+
+        private void START_Click(object sender, EventArgs e)
+        {
+            ForArm1.Start();
+        }
+
+        private void INTERRUPT_Click(object sender, EventArgs e)
+        {
+            if (INTERRUPT.Text.ToString().Equals("中斷"))
+            {
+                ForArm1.Stop();
+                INTERRUPT.Text = "繼續";
+
+            }
+            else {
+                ForArm1.Start();
+                INTERRUPT.Text = "中斷";
+            }
+
+            
         }
 
     }

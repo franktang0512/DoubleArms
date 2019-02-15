@@ -8,5 +8,6 @@ namespace DoubleArms
 {
     class Config
     {
+        public static int lockcount=0;
     }
 }

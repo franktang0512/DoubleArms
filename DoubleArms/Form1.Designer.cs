@@ -71,7 +71,7 @@
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
             this.panel2.Location = new System.Drawing.Point(148, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(405, 250);
+            this.panel2.Size = new System.Drawing.Size(379, 250);
             this.panel2.TabIndex = 0;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -139,6 +139,7 @@
             this.INTERRUPT.Text = "中斷";
             this.INTERRUPT.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.INTERRUPT.UseVisualStyleBackColor = true;
+            this.INTERRUPT.Click += new System.EventHandler(this.INTERRUPT_Click);
             // 
             // START
             // 
@@ -148,6 +149,7 @@
             this.START.TabIndex = 1;
             this.START.Text = "START";
             this.START.UseVisualStyleBackColor = true;
+            this.START.Click += new System.EventHandler(this.START_Click);
             // 
             // HOME
             // 

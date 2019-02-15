@@ -8,12 +8,14 @@ namespace DoubleArms
 {
     class Arm
     {
+        string arm_side;
         //x軸的資訊
         public int xaxis_X, xaxis_Z, xaxis_Width, xaxis_Height;
         //z軸的資訊
         public int zaxis_X, zaxis_Z, zaxis_Width, zaxis_Height;
 
-        public Arm(int xx, int xz, int zx, int zz) {
+        public Arm(string armside,int xx, int xz, int zx, int zz) {
+            arm_side = armside;
             //x軸原來大小
             xaxis_Width = 80;
             xaxis_Height = 15;
@@ -41,29 +43,50 @@ namespace DoubleArms
         }
         public void Left()
         {
-            xaxis_Width--;
-            zaxis_X--;
+            if (arm_side.Equals("right"))
+            {
+                xaxis_Width++;
+                zaxis_X--;
+                xaxis_X--;
+            }
+            else {
+                xaxis_Width--;
+                zaxis_X--;            
+            }
+
         
+        }
+        public void R_Left()
+        {
+
+            
+            zaxis_X--;
+            xaxis_X--;
+            xaxis_Width++;
+
         }
         public void Right()
         {
-            xaxis_Width++;
-            zaxis_X++;       
+            if (arm_side.Equals("right"))
+            {
+                xaxis_Width--;
+                zaxis_X++;
+                xaxis_X++;
+            }
+            else {
+                xaxis_Width++;
+                zaxis_X++;
+            
+            }
+       
+        }
+        public void R_Right()
+        {
+            xaxis_Width--;
+            zaxis_X++;
+            xaxis_X++;
         }
         public void Stop() { }
-        public void ArmDataProvider(out int xx,out int xz,out int xw,out int xh,out int zx,out int zz,out int zw,out int zh) {
-            xx = xaxis_X;
-            xz = xaxis_Z;
-            xw = xaxis_Width;
-            xh = xaxis_Height;
-
-            zx = zaxis_X;
-            zz = zaxis_Z;
-            zw = zaxis_Width;
-            zh = zaxis_Height;
-        
-        }
-
 
         /****************************************************/
         void Seize() { }
