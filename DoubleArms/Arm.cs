@@ -14,6 +14,9 @@ namespace DoubleArms
         //z軸的資訊
         public int zaxis_X, zaxis_Z, zaxis_Width, zaxis_Height;
 
+        //parall左右控制  virtical 上下控制
+        public int virtical = 0, parall = 0;
+        //抓取控制
         public int seize;
 
         public Arm(string armside,int xx, int xz, int zx, int zz) {
@@ -24,7 +27,6 @@ namespace DoubleArms
             //z軸原來大小
             zaxis_Width = 15;
             zaxis_Height = 65;
-
             //x,z軸因左右不同座標不同
             xaxis_X = xx;
             xaxis_Z = xz;
@@ -33,8 +35,6 @@ namespace DoubleArms
        
         }
 
-
-        //TODO: 手臂會有的功能 UP Down Left Right Seize Release Create Remove Show Hide 
         public void UP()
         {
             zaxis_Z--;
@@ -54,15 +54,7 @@ namespace DoubleArms
             else {
                 xaxis_Width--;
                 zaxis_X--;            
-            }
-
-        
-        }
-        public void R_Left()
-        {            
-            zaxis_X--;
-            xaxis_X--;
-            xaxis_Width++;
+            }        
         }
         public void Right()
         {
@@ -74,31 +66,18 @@ namespace DoubleArms
             }
             else {
                 xaxis_Width++;
-                zaxis_X++;
-            
-            }
-       
+                zaxis_X++;            
+            }       
         }
-        public void R_Right()
-        {
-            xaxis_Width--;
-            zaxis_X++;
-            xaxis_X++;
-        }
-        /****************************************************/
         public void  Seize() {
             seize = 1;
-
         }
         public void Release() {
             seize = 2;
         }
 
-        void Create() { }
-        void Remove() { }
-        
-        void Show() { }
-        void Hide() { }
+
+
     }
 }
         
