@@ -7,3 +7,13 @@ C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.Properti
 C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csproj.GenerateResource.Cache
 C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.exe
 C:\Users\franky\Desktop\test\DoubleArms\DoubleArms\obj\Debug\DoubleArms.pdb
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\bin\Debug\DoubleArms.exe.config
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\bin\Debug\DoubleArms.exe
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\bin\Debug\DoubleArms.pdb
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csprojAssemblyReference.cache
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.Form1.resources
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.Properties.Resources.resources
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csproj.GenerateResource.cache
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.csproj.CoreCompileInputs.cache
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.exe
+C:\Users\Frank\Desktop\DoubleArms\DoubleArms\obj\Debug\DoubleArms.pdb

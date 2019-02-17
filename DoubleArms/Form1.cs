@@ -17,36 +17,82 @@ namespace DoubleArms
         int lockcount = 0;
         Arm LeftArm;
         Arm RightArm;
-        Food LeftFood = new Food();
-        Food tranFood = new Food();
+        Food LeftFood;
+        Food RightFood;
         public Form1()
         {
             InitializeComponent();
+
             LeftArm = new Arm("",0, 40, 65, 0);
             RightArm = new Arm("",this.panel2.Width - 80, 40, this.panel2.Width - 80, 0);
+
+            LeftFood = new Food(65,105);
+            RightFood = new Food(194,105);
+            RightFood.setXZ((this.panel2.Width-15)/2,105);
+
             ForArm1.Stop();
         }
 
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            //Console.WriteLine("[{0}]",Config.lockcount);
-
-            //Console.WriteLine(LeftFood.X + "," + LeftFood.Z);
-            //Console.WriteLine(LeftArm.seize);
-
             BalanceWorking();
+            FoodMove();
+            this.panel2.Invalidate();
+        }
+        
+        void FoodMove() {
+            //Console.WriteLine("{0},{1},{2},{3}", LeftArm.zaxis_X, LeftArm.zaxis_Z, parall, virtical);
+            //Console.WriteLine("{0},{1},{2},{3}", LeftFood.X,LeftFood.Z,LeftFood.color,"-w-w-w-w-w-w-s-s-s-s-s");
+
+            if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 1 && parall == 0 && virtical == 1)
+            {
+                this.LeftFood.X = 65;
+                this.LeftFood.Z = 105;
+                LeftFood.color = 1;
+            }
+
+            if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2  && LeftArm.zaxis_Z == 0 && parall == 0 && virtical == 2)
+            {
+                LeftArm.seize = 0;
+                LeftFood.color = 0;
+            }
             if (LeftArm.seize == 1)
             {
                 LeftFood.X = LeftArm.zaxis_X;
                 LeftFood.Z = LeftArm.zaxis_Z + LeftArm.zaxis_Height;
             }
-            if (LeftArm.seize == 2) {
+            if (LeftArm.seize == 2)
+            {
 
                 LeftFood.X = (this.panel2.Width - 15) / 2;
                 LeftFood.Z = 105;
-            
+
             }
-            this.panel2.Invalidate();
+            //----------------------------------------------------------------------------------------------------------------------
+            if (RightArm.zaxis_X == 194 && RightArm.zaxis_Z == 1 && parall_r == 0 && virtical_r == 1)
+            {
+                RightFood.X = 194;
+                RightFood.Z = 105;
+                RightFood.color = 1;
+            }
+
+            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0 && parall_r == 0 && virtical_r == 2)
+            {
+                RightArm.seize = 0;
+                RightFood.color = 0;
+            }
+            if (RightArm.seize == 1)
+            {
+                RightFood.X = RightArm.zaxis_X;
+                RightFood.Z = RightArm.zaxis_Z + RightArm.zaxis_Height;
+            }
+            if (RightArm.seize == 2)
+            {
+
+                RightFood.X = this.panel2.Width - 80;
+                RightFood.Z = 105;
+
+            }
 
 
 
@@ -192,7 +238,19 @@ namespace DoubleArms
                 if (parall_r == 0 && virtical_r == 2) { RightArm.UP(); }
 
             }
-            if (RightArm.zaxis_Z == 41) { virtical_r = 2; }
+            if (RightArm.zaxis_Z == 41) {
+                virtical_r = 2;
+                if (RightArm.zaxis_X == 323)
+                {
+                    RightArm.Release();
+                }
+                if (RightArm.zaxis_X == 194)
+                {
+                    RightArm.Seize();
+                    
+                }
+
+            }
 
             if (RightArm.xaxis_X == this.panel2.Width - 80 && parall_r == 1 && virtical_r == 0)
             {
@@ -206,23 +264,12 @@ namespace DoubleArms
                 parall_r = 0;
                 virtical_r = 1;
             }
-            /*********************************************************************/
         }
 
-        private void FormView_Paint(object sender, PaintEventArgs e)
-        {
-
-
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
+            Console.WriteLine(this.panel2.Width);
 
             //底盤
             e.Graphics.FillRectangle(Brushes.Green, 0, 115, this.Width, 15);
@@ -240,19 +287,26 @@ namespace DoubleArms
             e.Graphics.FillRectangle(Brushes.BlueViolet, RightArm.xaxis_X, RightArm.xaxis_Z, RightArm.xaxis_Width, RightArm.xaxis_Height);
             //z軸長方形R
             e.Graphics.FillRectangle(Brushes.Navy, RightArm.zaxis_X, RightArm.zaxis_Z, RightArm.zaxis_Width, RightArm.zaxis_Height);
+            
+            //left food
+            if (LeftFood.color == 0)
+            {
+                e.Graphics.FillRectangle(Brushes.White, this.LeftFood.X, this.LeftFood.Z, this.LeftFood.Width, this.LeftFood.Height);
+            }
+            if (LeftFood.color == 1)
+            {
+                e.Graphics.FillRectangle(Brushes.Peru, this.LeftFood.X, this.LeftFood.Z, this.LeftFood.Width, this.LeftFood.Height);
+            }
 
-
-            //food
-
-
-            e.Graphics.FillRectangle(Brushes.Peru,LeftFood.X, LeftFood.Z,LeftFood.Width,LeftFood.Height);
-
-            //e.Graphics.FillRectangle(Brushes.Peru, (this.panel2.Width -20) / 2, 105, 15, 10);
-
-            e.Graphics.FillRectangle(Brushes.Peru, this.panel2.Width - 80, 105, 15, 10);
-
-
-            //e.Graphics.FillRectangle(Brushes.Peru, this.Width - 100, 250, 30, 10);
+            //righy food
+            if (RightFood.color == 0)
+            {
+                e.Graphics.FillRectangle(Brushes.White, this.RightFood.X, this.RightFood.Z, this.RightFood.Width, this.RightFood.Height);
+            }
+            if (RightFood.color == 1)
+            {
+                e.Graphics.FillRectangle(Brushes.Peru, this.RightFood.X, this.RightFood.Z, this.RightFood.Width, this.RightFood.Height);
+            }
         }
 
         private void START_Click(object sender, EventArgs e)
@@ -271,10 +325,7 @@ namespace DoubleArms
             else {
                 ForArm1.Start();
                 INTERRUPT.Text = "中斷";
-            }
-
-            
+            }            
         }
-
     }
 }

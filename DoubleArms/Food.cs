@@ -8,17 +8,17 @@ namespace DoubleArms
 {
     class Food
     {
-        public int X, Z, Width, Height;
+        public int X, Z, Width, Height,color;
         public Food(string prefix) {
             if (prefix.Equals("front")) { }
             if (prefix.Equals("middle")) { }
         
         }
 
-        public Food()
+        public Food(int x, int z)
         {
-            X = 65;
-            Z = 105;
+            X = x;
+            Z = z;
             Width = 15;
             Height = 10;
         }
@@ -28,5 +28,6 @@ namespace DoubleArms
             X = x;
             Z = z;
         }
+        public void setColor() { }
     }
 }
