@@ -17,6 +17,7 @@ namespace DoubleArms
         Arm RightArm;
         Food LeftFood;
         Food RightFood;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,18 +28,17 @@ namespace DoubleArms
 
             LeftFood = new Food(65,105);
             RightFood = new Food((this.panel2.Width - 15) / 2,105);
-            //RightFood.setXZ((this.panel2.Width-15)/2,105);
 
             ForArm1.Stop();
         }
-
+        //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
             BalanceWorking();
             FoodMove();
             this.panel2.Invalidate();
         }
-        
+        //Food移動的條件
         void FoodMove() {
             //Console.WriteLine("{0},{1},{2},{3}", LeftArm.zaxis_X, LeftArm.zaxis_Z, parall, virtical);
             //Console.WriteLine("{0},{1},{2},{3}", LeftFood.X,LeftFood.Z,LeftFood.color,"-w-w-w-w-w-w-s-s-s-s-s");
@@ -46,18 +46,21 @@ namespace DoubleArms
             RightFoodMove();
 
         }
+        //左Food
         void LeftFoodMove() {
             if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 1 && LeftArm.parall == 0 && LeftArm.virtical == 1)
             {
                 this.LeftFood.X = 65;
                 this.LeftFood.Z = 105;
-                LeftFood.color = 1;
+                LeftFood.setColor(1);
+                //LeftFood.color = 1;
             }
 
             if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2 && LeftArm.zaxis_Z == 0 && LeftArm.parall == 0 && LeftArm.virtical == 2)
             {
                 LeftArm.seize = 0;
-                LeftFood.color = 0;
+                LeftFood.setColor(0);
+                //LeftFood.color = 0;
             }
             if (LeftArm.seize == 1)
             {
@@ -72,18 +75,21 @@ namespace DoubleArms
 
             }
         }
+        //右Food
         void RightFoodMove() {
-            if (RightArm.zaxis_X == 194 && RightArm.zaxis_Z == 1 && RightArm.parall == 0 && RightArm.virtical == 1)
+            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z == 1 && RightArm.parall == 0 && RightArm.virtical == 1)
             {
-                RightFood.X = 194;
+                RightFood.X = (this.panel2.Width-15)/2;
                 RightFood.Z = 105;
-                RightFood.color = 1;
+                RightFood.setColor(1);
+                //RightFood.color = 1;
             }
 
             if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0 && RightArm.parall == 0 && RightArm.virtical == 2)
             {
                 RightArm.seize = 0;
-                RightFood.color = 0;
+                RightFood.setColor(0);
+                //RightFood.color = 0;
             }
             if (RightArm.seize == 1)
             {
@@ -98,6 +104,7 @@ namespace DoubleArms
 
             }
         }
+        //使兩邊手臂運動協調
         void BalanceWorking() {
             if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40)
             {
@@ -119,13 +126,10 @@ namespace DoubleArms
             if (lockcount == 0)
             {
                 LeftArmWorking();
-
                 RightArmWoking();
-
             }
             else
             {
-
                 if (lockcount == 1)
                 {
                     LeftArmWorking();
@@ -133,8 +137,6 @@ namespace DoubleArms
                     if (RightArm.xaxis_X >= this.panel2.Width / 2 + 40)
                     {
                         RightArmWoking();
-
-
                     }
 
                 }
@@ -145,13 +147,11 @@ namespace DoubleArms
                     if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40)
                     {
                         LeftArmWorking();
-
                     }
                 }
-
-
             }
         }
+        //左手臂運動
         void LeftArmWorking() {
             /********************************左手臂*************************************/
             if (LeftArm.zaxis_Z == 0)
@@ -202,6 +202,7 @@ namespace DoubleArms
             }
             /*********************************************************************/
         }
+        //右手臂運動
         void RightArmWoking() {
             /********************************右手臂*************************************/
             if (RightArm.zaxis_Z == 0)
@@ -265,7 +266,7 @@ namespace DoubleArms
             }
         }
 
-
+        //畫布呈現結果
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             //底盤

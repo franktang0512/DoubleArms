@@ -8,12 +8,12 @@ namespace DoubleArms
 {
     class Arm
     {
+        //(左\右)手臂
         string arm_side;
         //x軸的資訊
         public int xaxis_X, xaxis_Z, xaxis_Width, xaxis_Height;
         //z軸的資訊
         public int zaxis_X, zaxis_Z, zaxis_Width, zaxis_Height;
-
         //parall左右控制  virtical 上下控制
         public int virtical = 0, parall = 0;
         //抓取控制
@@ -69,7 +69,7 @@ namespace DoubleArms
                 zaxis_X++;            
             }       
         }
-        public void  Seize() {
+        public void Seize() {
             seize = 1;
         }
         public void Release() {
