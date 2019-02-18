@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoubleArms
 {
-    class Arm
+    partial class Arm
     {
         //(左\右)手臂
         string arm_side;
@@ -31,10 +31,10 @@ namespace DoubleArms
             xaxis_X = xx;
             xaxis_Z = xz;
             zaxis_X = zx;
-            zaxis_Z = zz;
-       
+            zaxis_Z = zz;       
         }
-
+    }
+    partial class Arm {
         public void UP()
         {
             zaxis_Z--;
@@ -51,10 +51,11 @@ namespace DoubleArms
                 zaxis_X--;
                 xaxis_X--;
             }
-            else {
+            else
+            {
                 xaxis_Width--;
-                zaxis_X--;            
-            }        
+                zaxis_X--;
+            }
         }
         public void Right()
         {
@@ -64,20 +65,115 @@ namespace DoubleArms
                 zaxis_X++;
                 xaxis_X++;
             }
-            else {
+            else
+            {
                 xaxis_Width++;
-                zaxis_X++;            
-            }       
+                zaxis_X++;
+            }
         }
-        public void Seize() {
+        public void Seize()
+        {
             seize = 1;
         }
-        public void Release() {
+        public void Release()
+        {
             seize = 2;
         }
-
-
-
     }
+    partial class Arm {
+        public int getXX()
+        {
+            return xaxis_X;
+        }
+        public int getXZ()
+        {
+            return xaxis_Z;
+        }
+        public int getZX()
+        {
+            return zaxis_X;
+        }
+        public int getZZ()
+        {
+            return zaxis_Z;
+        }
+        public int getXWidth()
+        {
+            return xaxis_Width;
+        }
+        public int getZWidth()
+        {
+            return zaxis_Width;
+        }
+        public int getXHeight()
+        {
+            return xaxis_Height;
+        }
+        public int getZHeight()
+        {
+            return zaxis_Height;
+        }
+        public int getSeize()
+        {
+            return seize;
+        }
+        public int getVirtical()
+        {
+            return virtical;
+        }
+        public int getParall()
+        {
+            return parall;
+        }
+    
+    }
+    partial class Arm {
+        public void setXX(int xx)
+        {
+            xaxis_X=xx;
+        }
+        public void setXZ(int xz)
+        {
+            xaxis_Z=xz;
+        }
+        public void setZX(int zx)
+        {
+            zaxis_X = zx;
+        }
+        public void setZZ(int zz)
+        {
+            zaxis_Z = zz;
+        }
+        public void setXWidth(int xw)
+        {
+
+            xaxis_Width=xw;
+        }
+        public void setZWidth(int zw)
+        {
+            zaxis_Width=zw;
+        }
+        public void setXHeight(int xh)
+        {
+            xaxis_Height=xh;
+        }
+        public void setZHeight(int zh)
+        {
+            zaxis_Height=zh;
+        }
+        public void setSeize(int s)
+        {
+            seize=s;
+        }
+        public void setVirtical(int v)
+        {
+            virtical=v;
+        }
+        public void setParall(int p)
+        {
+            parall=p;
+        }
+    }
+
 }
         

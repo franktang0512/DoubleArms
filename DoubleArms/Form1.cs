@@ -18,9 +18,13 @@ namespace DoubleArms
         Food LeftFood;
         Food RightFood;
 
+        Graphics backGraphics;
+        Bitmap backBmp;
+
         public Form1()
         {
             InitializeComponent();
+            this.INTERRUPT.Enabled = false;
             lockcount = 0;
 
             LeftArm = new Arm("left",0, 40, 65, 0);
@@ -29,15 +33,65 @@ namespace DoubleArms
             LeftFood = new Food(65,105);
             RightFood = new Food((this.panel2.Width - 15) / 2,105);
 
+            backBmp = new Bitmap(this.panel2.DisplayRectangle.Width, this.panel2.DisplayRectangle.Height);
+            backGraphics = Graphics.FromImage(backBmp);
+
+
             ForArm1.Stop();
         }
         //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
+            backGraphics.Clear(Color.White);
+
             BalanceWorking();
             FoodMove();
-            this.panel2.Invalidate();
+            Repaint();
+
+            this.panel2.CreateGraphics().DrawImageUnscaled(backBmp, 0, 0);
+
+            
+
+
         }
+        void Repaint() {
+            //底盤
+            backGraphics.FillRectangle(Brushes.Green, 0, 115, this.Width, 15);
+            //障礙物L
+            backGraphics.FillRectangle(Brushes.Gray, this.panel2.Width / 2 - 40, 95, 15, 20);
+            //障礙物R
+            backGraphics.FillRectangle(Brushes.Gray, this.panel2.Width / 2 + 40, 95, 15, 20);
+
+            //x軸長方形L
+            backGraphics.FillRectangle(Brushes.BlueViolet, LeftArm.xaxis_X, LeftArm.xaxis_Z, LeftArm.xaxis_Width, LeftArm.xaxis_Height);
+            //z軸長方形L
+            backGraphics.FillRectangle(Brushes.Navy, LeftArm.zaxis_X, LeftArm.zaxis_Z, LeftArm.zaxis_Width, LeftArm.zaxis_Height);
+
+            //x軸長方形R
+            backGraphics.FillRectangle(Brushes.BlueViolet, RightArm.xaxis_X, RightArm.xaxis_Z, RightArm.xaxis_Width, RightArm.xaxis_Height);
+            //z軸長方形R
+            backGraphics.FillRectangle(Brushes.Navy, RightArm.zaxis_X, RightArm.zaxis_Z, RightArm.zaxis_Width, RightArm.zaxis_Height);
+
+            //左邊Food
+            if (LeftFood.getColor() == 0)
+            {
+                backGraphics.FillRectangle(Brushes.White, this.LeftFood.getX(), this.LeftFood.getZ(), this.LeftFood.getWidth(), this.LeftFood.getHeight());
+            }
+            if (LeftFood.getColor() == 1)
+            {
+                backGraphics.FillRectangle(Brushes.Peru, this.LeftFood.getX(), this.LeftFood.getZ(), this.LeftFood.getWidth(), this.LeftFood.getHeight());
+            }
+            //右邊Food
+            if (RightFood.getColor() == 0)
+            {
+                backGraphics.FillRectangle(Brushes.White, this.RightFood.getX(), this.RightFood.getZ(), this.RightFood.getWidth(), this.RightFood.getHeight());
+            }
+            if (RightFood.getColor() == 1)
+            {
+                backGraphics.FillRectangle(Brushes.Peru, this.RightFood.getX(), this.RightFood.getZ(), this.RightFood.getWidth(), this.RightFood.getHeight());
+            }        
+        }
+
         //Food移動的條件
         void FoodMove() {
             //Console.WriteLine("{0},{1},{2},{3}", LeftArm.zaxis_X, LeftArm.zaxis_Z, parall, virtical);
@@ -50,58 +104,44 @@ namespace DoubleArms
         void LeftFoodMove() {
             if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 1 && LeftArm.parall == 0 && LeftArm.virtical == 1)
             {
-                this.LeftFood.X = 65;
-                this.LeftFood.Z = 105;
+                this.LeftFood.setXZ(65,105);
                 LeftFood.setColor(1);
-                //LeftFood.color = 1;
             }
 
             if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2 && LeftArm.zaxis_Z == 0 && LeftArm.parall == 0 && LeftArm.virtical == 2)
             {
                 LeftArm.seize = 0;
                 LeftFood.setColor(0);
-                //LeftFood.color = 0;
             }
             if (LeftArm.seize == 1)
             {
-                LeftFood.X = LeftArm.zaxis_X;
-                LeftFood.Z = LeftArm.zaxis_Z + LeftArm.zaxis_Height;
+                LeftFood.setXZ(LeftArm.zaxis_X,LeftArm.zaxis_Z + LeftArm.zaxis_Height);
             }
             if (LeftArm.seize == 2)
             {
-
-                LeftFood.X = (this.panel2.Width - 15) / 2;
-                LeftFood.Z = 105;
-
+                LeftFood.setXZ((this.panel2.Width - 15) / 2,105);
             }
         }
         //右Food
         void RightFoodMove() {
             if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z == 1 && RightArm.parall == 0 && RightArm.virtical == 1)
             {
-                RightFood.X = (this.panel2.Width-15)/2;
-                RightFood.Z = 105;
+                RightFood.setXZ((this.panel2.Width-15)/2,105);
                 RightFood.setColor(1);
-                //RightFood.color = 1;
             }
 
             if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0 && RightArm.parall == 0 && RightArm.virtical == 2)
             {
                 RightArm.seize = 0;
                 RightFood.setColor(0);
-                //RightFood.color = 0;
             }
             if (RightArm.seize == 1)
             {
-                RightFood.X = RightArm.zaxis_X;
-                RightFood.Z = RightArm.zaxis_Z + RightArm.zaxis_Height;
+                RightFood.setXZ(RightArm.zaxis_X, RightArm.zaxis_Z + RightArm.zaxis_Height);
             }
             if (RightArm.seize == 2)
             {
-
-                RightFood.X = this.panel2.Width - 80;
-                RightFood.Z = 105;
-
+                RightFood.setXZ(this.panel2.Width - 80, 105);
             }
         }
         //使兩邊手臂運動協調
@@ -287,28 +327,30 @@ namespace DoubleArms
             e.Graphics.FillRectangle(Brushes.Navy, RightArm.zaxis_X, RightArm.zaxis_Z, RightArm.zaxis_Width, RightArm.zaxis_Height);
             
             //左邊Food
-            if (LeftFood.color == 0)
+            if (LeftFood.getColor() == 0)
             {
-                e.Graphics.FillRectangle(Brushes.White, this.LeftFood.X, this.LeftFood.Z, this.LeftFood.Width, this.LeftFood.Height);
+                e.Graphics.FillRectangle(Brushes.White, this.LeftFood.getX(), this.LeftFood.getZ(), this.LeftFood.getWidth(), this.LeftFood.getHeight());
             }
-            if (LeftFood.color == 1)
+            if (LeftFood.getColor()== 1)
             {
-                e.Graphics.FillRectangle(Brushes.Peru, this.LeftFood.X, this.LeftFood.Z, this.LeftFood.Width, this.LeftFood.Height);
+                e.Graphics.FillRectangle(Brushes.Peru, this.LeftFood.getX(), this.LeftFood.getZ(), this.LeftFood.getWidth(), this.LeftFood.getHeight());
             }
             //右邊Food
-            if (RightFood.color == 0)
+            if (RightFood.getColor() == 0)
             {
-                e.Graphics.FillRectangle(Brushes.White, this.RightFood.X, this.RightFood.Z, this.RightFood.Width, this.RightFood.Height);
+                e.Graphics.FillRectangle(Brushes.White, this.RightFood.getX(), this.RightFood.getZ(), this.RightFood.getWidth(), this.RightFood.getHeight());
             }
-            if (RightFood.color == 1)
+            if (RightFood.getColor() == 1)
             {
-                e.Graphics.FillRectangle(Brushes.Peru, this.RightFood.X, this.RightFood.Z, this.RightFood.Width, this.RightFood.Height);
+                e.Graphics.FillRectangle(Brushes.Peru, this.RightFood.getX(), this.RightFood.getZ(), this.RightFood.getWidth(), this.RightFood.getHeight());
             }
         }
 
         private void START_Click(object sender, EventArgs e)
         {
             ForArm1.Start();
+            START.Enabled = false;
+            this.INTERRUPT.Enabled = true;
         }
 
         private void INTERRUPT_Click(object sender, EventArgs e)
@@ -323,6 +365,21 @@ namespace DoubleArms
                 ForArm1.Start();
                 INTERRUPT.Text = "中斷";
             }            
+        }
+
+        private void EXIT_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void Home_Click(object sender, EventArgs e)
+        {
+            try { 
+            
+            }
+            catch { 
+            
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace DoubleArms
 {
     class Food
     {
-        public int X, Z, Width, Height,color;
+        int X, Z, Width, Height,color;
 
         public Food(int x, int z)
         {
@@ -22,6 +22,24 @@ namespace DoubleArms
         {
             X = x;
             Z = z;
+        }
+        public int getX() {
+            return X;
+        }
+        public int getZ()
+        {
+            return Z;
+        }
+        public int getWidth()
+        {
+            return Width;
+        }
+        public int getHeight()
+        {
+            return Height;
+        }
+        public int getColor() {
+            return color;        
         }
         public void setColor(int c) {
             color = c;
