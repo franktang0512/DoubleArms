@@ -43,11 +43,19 @@ namespace DoubleArms
         private void ForArm1_Tick(object sender, EventArgs e)
         {
             backGraphics.Clear(Color.White);
+            if (Convert.ToInt32(FrontCount.Text.ToString()) != 0 && Convert.ToInt32(MiddleCount.Text.ToString()) != 0)
+            {
+                if (LeftFood.getColor() == 1) { }
+
+            }
 
             BalanceWorking();
             FoodMove();
-            Repaint();
 
+
+
+
+            Repaint();
             this.panel2.CreateGraphics().DrawImageUnscaled(backBmp, 0, 0);
 
             
@@ -226,10 +234,12 @@ namespace DoubleArms
                 /*/****/////////
                 LeftArm.virtical = 2;
                 if (LeftArm.zaxis_X == 65) {
-                    LeftArm.Seize();                 
+                    LeftArm.Seize();
+                    this.FrontCount.Text = (Convert.ToInt32(this.FrontCount.Text.ToString()) - 1).ToString();
                 }
                 if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2) {
-                    LeftArm.Release(); 
+                    LeftArm.Release();
+                    this.MiddleCount.Text = (Convert.ToInt32(this.MiddleCount.Text.ToString()) + 1).ToString();
                 }
                 
             }
@@ -283,10 +293,12 @@ namespace DoubleArms
                 if (RightArm.zaxis_X == 323)
                 {
                     RightArm.Release();
+                    this.EndCount.Text = (Convert.ToInt32(this.EndCount.Text.ToString())+1).ToString();
                 }
                 if (RightArm.zaxis_X == 194)
                 {
                     RightArm.Seize();
+                    this.MiddleCount.Text = (Convert.ToInt32(this.MiddleCount.Text.ToString()) - 1).ToString();
                     
                 }
 
