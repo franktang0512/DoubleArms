@@ -209,13 +209,14 @@ namespace DoubleArms
         //右Food
         void RightFoodMove()
         {
-            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z == 1 && RightArm.parall == 0 && RightArm.virtical == 1)
+            Console.WriteLine();
+            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z <10 && RightArm.parall == 0 && RightArm.virtical == 1)
             {
                 RightFood.setXZ((this.panel2.Width - 15) / 2, 105);
                 RightFood.setColor(1);
             }
 
-            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0 && RightArm.parall == 0 && RightArm.virtical == 2)
+            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z <10 && RightArm.parall == 0 && RightArm.virtical == 2)
             {
                 RightArm.seize = 0;
                 RightFood.setColor(0);
