@@ -79,6 +79,7 @@ namespace DoubleArms
         {
             seize = 2;
         }
+
     }
     partial class Arm {
         public int getXX()
