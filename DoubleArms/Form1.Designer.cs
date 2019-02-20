@@ -43,6 +43,8 @@
             this.EXIT = new System.Windows.Forms.Button();
             this.START = new System.Windows.Forms.Button();
             this.INTERRUPT = new System.Windows.Forms.Button();
+            this.speed1 = new System.Windows.Forms.TextBox();
+            this.speed2 = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -59,15 +61,18 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.06798F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.93202F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 12);
+            this.tableLayoutPanel1.Controls.Add(this.speed1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.speed2, 2, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(79, 15);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 77.61194F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.38806F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(572, 335);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(763, 419);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -77,58 +82,65 @@
             this.panel1.Controls.Add(this.EndCount);
             this.panel1.Controls.Add(this.MiddleCount);
             this.panel1.Controls.Add(this.FrontCount);
-            this.panel1.Location = new System.Drawing.Point(94, 262);
+            this.panel1.Location = new System.Drawing.Point(125, 329);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(408, 70);
+            this.panel1.Size = new System.Drawing.Size(544, 86);
             this.panel1.TabIndex = 1;
             // 
             // Loading
             // 
             this.Loading.AutoSize = true;
-            this.Loading.Location = new System.Drawing.Point(74, 41);
+            this.Loading.Location = new System.Drawing.Point(99, 51);
+            this.Loading.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Loading.Name = "Loading";
-            this.Loading.Size = new System.Drawing.Size(65, 12);
+            this.Loading.Size = new System.Drawing.Size(82, 15);
             this.Loading.TabIndex = 4;
             this.Loading.Text = "滿載數量：";
             // 
             // LoadConstrain
             // 
-            this.LoadConstrain.Location = new System.Drawing.Point(145, 34);
+            this.LoadConstrain.Location = new System.Drawing.Point(193, 42);
+            this.LoadConstrain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LoadConstrain.Name = "LoadConstrain";
-            this.LoadConstrain.Size = new System.Drawing.Size(100, 22);
+            this.LoadConstrain.Size = new System.Drawing.Size(132, 25);
             this.LoadConstrain.TabIndex = 3;
             this.LoadConstrain.Text = "3";
             // 
             // EndCount
             // 
-            this.EndCount.Location = new System.Drawing.Point(282, 6);
+            this.EndCount.Location = new System.Drawing.Point(376, 8);
+            this.EndCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EndCount.Name = "EndCount";
-            this.EndCount.Size = new System.Drawing.Size(100, 22);
+            this.EndCount.Size = new System.Drawing.Size(132, 25);
             this.EndCount.TabIndex = 2;
             this.EndCount.Text = "0";
             // 
             // MiddleCount
             // 
-            this.MiddleCount.Location = new System.Drawing.Point(145, 6);
+            this.MiddleCount.Location = new System.Drawing.Point(193, 8);
+            this.MiddleCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MiddleCount.Name = "MiddleCount";
-            this.MiddleCount.Size = new System.Drawing.Size(100, 22);
+            this.MiddleCount.Size = new System.Drawing.Size(132, 25);
             this.MiddleCount.TabIndex = 1;
             this.MiddleCount.Text = "1";
             // 
             // FrontCount
             // 
-            this.FrontCount.Location = new System.Drawing.Point(19, 6);
+            this.FrontCount.Location = new System.Drawing.Point(25, 8);
+            this.FrontCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FrontCount.Name = "FrontCount";
-            this.FrontCount.Size = new System.Drawing.Size(100, 22);
+            this.FrontCount.Size = new System.Drawing.Size(132, 25);
             this.FrontCount.TabIndex = 0;
             this.FrontCount.Text = "9";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.panel2.Location = new System.Drawing.Point(94, 3);
+            this.panel2.Location = new System.Drawing.Point(125, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(403, 249);
+            this.panel2.Size = new System.Drawing.Size(537, 311);
             this.panel2.TabIndex = 0;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -138,16 +150,18 @@
             this.panel3.Controls.Add(this.EXIT);
             this.panel3.Controls.Add(this.START);
             this.panel3.Controls.Add(this.INTERRUPT);
-            this.panel3.Location = new System.Drawing.Point(12, 391);
+            this.panel3.Location = new System.Drawing.Point(16, 489);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(671, 65);
+            this.panel3.Size = new System.Drawing.Size(895, 81);
             this.panel3.TabIndex = 1;
             // 
             // Home
             // 
-            this.Home.Location = new System.Drawing.Point(3, 14);
+            this.Home.Location = new System.Drawing.Point(4, 18);
+            this.Home.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Home.Name = "Home";
-            this.Home.Size = new System.Drawing.Size(132, 37);
+            this.Home.Size = new System.Drawing.Size(176, 46);
             this.Home.TabIndex = 6;
             this.Home.Text = "Home";
             this.Home.UseVisualStyleBackColor = true;
@@ -155,9 +169,10 @@
             // 
             // EXIT
             // 
-            this.EXIT.Location = new System.Drawing.Point(570, 14);
+            this.EXIT.Location = new System.Drawing.Point(760, 18);
+            this.EXIT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EXIT.Name = "EXIT";
-            this.EXIT.Size = new System.Drawing.Size(98, 37);
+            this.EXIT.Size = new System.Drawing.Size(131, 46);
             this.EXIT.TabIndex = 5;
             this.EXIT.Text = "EXIT";
             this.EXIT.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -166,9 +181,10 @@
             // 
             // START
             // 
-            this.START.Location = new System.Drawing.Point(198, 14);
+            this.START.Location = new System.Drawing.Point(264, 18);
+            this.START.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.START.Name = "START";
-            this.START.Size = new System.Drawing.Size(149, 37);
+            this.START.Size = new System.Drawing.Size(199, 46);
             this.START.TabIndex = 1;
             this.START.Text = "START";
             this.START.UseVisualStyleBackColor = true;
@@ -176,25 +192,44 @@
             // 
             // INTERRUPT
             // 
-            this.INTERRUPT.Location = new System.Drawing.Point(353, 14);
+            this.INTERRUPT.Location = new System.Drawing.Point(471, 18);
+            this.INTERRUPT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.INTERRUPT.Name = "INTERRUPT";
-            this.INTERRUPT.Size = new System.Drawing.Size(112, 37);
+            this.INTERRUPT.Size = new System.Drawing.Size(149, 46);
             this.INTERRUPT.TabIndex = 2;
             this.INTERRUPT.Text = "中斷";
             this.INTERRUPT.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.INTERRUPT.UseVisualStyleBackColor = true;
             this.INTERRUPT.Click += new System.EventHandler(this.INTERRUPT_Click);
             // 
+            // speed1
+            // 
+            this.speed1.Location = new System.Drawing.Point(3, 328);
+            this.speed1.Name = "speed1";
+            this.speed1.Size = new System.Drawing.Size(100, 25);
+            this.speed1.TabIndex = 2;
+            this.speed1.Text = "2";
+            // 
+            // speed2
+            // 
+            this.speed2.Location = new System.Drawing.Point(676, 328);
+            this.speed2.Name = "speed2";
+            this.speed2.Size = new System.Drawing.Size(84, 25);
+            this.speed2.TabIndex = 3;
+            this.speed2.Text = "4";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(695, 468);
+            this.ClientSize = new System.Drawing.Size(927, 585);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel3);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "機器手臂";
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -218,6 +253,8 @@
         private System.Windows.Forms.TextBox FrontCount;
         private System.Windows.Forms.Label Loading;
         private System.Windows.Forms.TextBox LoadConstrain;
+        private System.Windows.Forms.TextBox speed1;
+        private System.Windows.Forms.MaskedTextBox speed2;
     }
 }
 

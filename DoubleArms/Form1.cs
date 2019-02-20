@@ -45,93 +45,6 @@ namespace DoubleArms
             BalanceWorking();
             FoodMove();
             Repaint();
-
-        }
-
-        void CountFoods()
-        {
-
-            if (Convert.ToInt32(FrontCount.Text.ToString()) == 0 && Convert.ToInt32(MiddleCount.Text.ToString()) > 0)
-            {
-                RightArmWoking();
-                if (LeftArm.seize == 1 || LeftArm.virtical == 1)
-                {
-                    LeftArmWorking();
-                }
-                else
-                {
-                    if (!(LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 0))
-                    {
-                        LeftArmWorking();
-                    }
-                }
-
-            }
-            if (Convert.ToInt32(FrontCount.Text.ToString()) == 0 && Convert.ToInt32(MiddleCount.Text.ToString()) == 0)
-            {
-
-                if (RightArm.seize == 1 || RightArm.virtical == 1)
-                {
-                    RightArmWoking();
-
-                }
-                else
-                {
-                    if (!(RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0))
-                    {
-                        RightArmWoking();
-                    }
-
-                }
-
-
-                if (LeftArm.seize == 1 || LeftArm.virtical == 1)
-                {
-                    LeftArmWorking();
-                }
-                else
-                {
-                    if (!(LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 0))
-                    {
-                        LeftArmWorking();
-                    }
-                }
-                if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z == 0 && RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0 && LeftArm.seize != 1 && RightArm.seize != 1)
-                {
-                    //ForArm1.Stop();
-                    INTERRUPT.Enabled = false;
-                    START.Enabled = true;
-
-                }
-
-
-
-            }
-            if (Convert.ToInt32(FrontCount.Text.ToString()) > 0 && Convert.ToInt32(MiddleCount.Text.ToString()) > 0)
-            {
-                BalanceWorking();
-
-            }
-            if (Convert.ToInt32(FrontCount.Text.ToString()) > 0 && Convert.ToInt32(MiddleCount.Text.ToString()) == 0)
-            {
-                LeftArmWorking();
-
-                if (RightArm.seize == 1 || RightArm.virtical == 1)
-                {
-                    RightArmWoking();
-
-                }
-                else
-                {
-                    if (!(RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z == 0))
-                    {
-                        RightArmWoking();
-                    }
-
-                }
-            }
-
-
         }
         void Repaint()
         {
@@ -177,16 +90,13 @@ namespace DoubleArms
         //Food移動的條件
         void FoodMove()
         {
-            //Console.WriteLine("{0},{1},{2},{3}", LeftArm.zaxis_X, LeftArm.zaxis_Z, parall, virtical);
-            //Console.WriteLine("{0},{1},{2},{3}", LeftFood.X,LeftFood.Z,LeftFood.color,"-w-w-w-w-w-w-s-s-s-s-s");
             LeftFoodMove();
             RightFoodMove();
-
         }
         //左Food
         void LeftFoodMove()
         {
-            if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z < 10 && LeftArm.parall == 0 && LeftArm.virtical == 1)
+            if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z > 10 && LeftArm.parall == 0 && LeftArm.virtical == 1)
             {
                 this.LeftFood.setXZ(65, 105);
                 LeftFood.setColor(1);
@@ -209,14 +119,13 @@ namespace DoubleArms
         //右Food
         void RightFoodMove()
         {
-            Console.WriteLine();
-            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z <10 && RightArm.parall == 0 && RightArm.virtical == 1)
+            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z > 10 && RightArm.parall == 0 && RightArm.virtical == 1)
             {
                 RightFood.setXZ((this.panel2.Width - 15) / 2, 105);
                 RightFood.setColor(1);
             }
 
-            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z <10 && RightArm.parall == 0 && RightArm.virtical == 2)
+            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z < 10 && RightArm.parall == 0 && RightArm.virtical == 2)
             {
                 RightArm.seize = 0;
                 RightFood.setColor(0);
@@ -230,193 +139,410 @@ namespace DoubleArms
                 RightFood.setXZ(this.panel2.Width - 80, 105);
             }
         }
+        
         //使兩邊手臂運動協調
-        void BalanceWorking()
+        void LockSetting()
         {
-            if (LeftArm.zaxis_X >= this.panel2.Width / 2 - 40)
+            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40-10&& RightArm.zaxis_X + 2 >= this.panel2.Width / 2 + 25)
             {
-                Console.WriteLine(LeftArm.zaxis_X.ToString() + "," + lockcount.ToString() + "[" + (this.panel2.Width / 2 - 40).ToString() + "]");
                 lockcount = 1;
             }
-            if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40)
+            if (LeftArm.zaxis_X<= this.panel2.Width / 2 - 40&& RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
             {
                 lockcount = 0;
             }
-            if (RightArm.zaxis_X + 2 < this.panel2.Width / 2 + 25)
+            if (RightArm.zaxis_X + 2 < this.panel2.Width / 2 + 25 && LeftArm.zaxis_X <= this.panel2.Width / 2 - 40)
             {
                 lockcount = 2;
             }
-            if (RightArm.zaxis_X > this.panel2.Width / 2 + 25)
-            {
-                lockcount = 0;
+        }
+
+
+        void aa() {
+            LockSetting();
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0)&& (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
+                if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
+                {
+                    if (lockcount == 0) {
+                        RightArmWoking();
+                        if (1==1/*LX未歸零*/) {
+                            LeftArmWorking();
+                        }
+                    }
+                    if (lockcount == 1) {
+                        LeftArmWorking();
+                        if (1==1/*RB<RX*/) {
+                            RightArmWoking();
+                        }
+                    }
+                    if (lockcount == 2) {
+                        RightArmWoking();
+                        if (1 == 1/*LX未歸零&&LX<LB*/)
+                        {
+                            LeftArmWorking();
+                        }
+                    }
+                }
+                else
+                {
+                    if (lockcount == 0) {
+                        RightArmWoking();
+                        LeftArmWorking();
+                    }
+                    if (lockcount == 1) {
+                        LeftArmWorking();
+                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+                    }
+                    if (lockcount == 2) {
+                        RightArmWoking();
+                        if (1 == 1/*LB>LX*/) { LeftArmWorking(); }
+                    }
+
+                }
+
+            }
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain))) {
+                if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
+                {
+                    if (lockcount == 0) {
+                        RightArmWoking();
+                        if (1 == 1/*LX未歸零*/) { LeftArmWorking(); }
+                    }
+                    if (lockcount == 1) {
+                        LeftArmWorking();
+                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+
+                    }
+                    if (lockcount == 2) {
+                        RightArmWoking();
+                        if (1 == 1/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
+                    }
+                }
+                else
+                {
+                    if (lockcount == 0) {
+                        RightArmWoking();
+                        if (1 == 1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
+
+                    }
+                    if (lockcount == 1) {
+                        LeftArmWorking();
+                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+
+                    }
+                    if (lockcount == 2) {
+                        RightArmWoking();
+                        if (1 == 1/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
+
+                    }
+
+                }
+
+            }
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0)) {
+
+                if (lockcount == 0) {
+                    LeftArmWorking();
+                    if (1 == 1/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                }
+                if (lockcount == 1) {
+                    LeftArmWorking();
+                    if (1 == 1/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                }
+                if (lockcount == 2) {
+                    if (1 == 1/*(R.seize==1)*/) { RightArmWoking(); }
+                    if (1 == 1/*(LX<LB)*/) { LeftArmWorking(); }
+                }
             }
 
-            if (lockcount == 0)
-            {
-                LeftArmWorking(); LeftArmWorking();
+        }
 
-                RightArmWoking(); RightArmWoking(); RightArmWoking(); RightArmWoking();
+        void BalanceWorking()
+        {
+            LockSetting();
+            Console.WriteLine(lockcount);
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0))
+            {
+                if (LeftArm.zaxis_X >= this.panel2.Width / 2 - 40)
+                {
+                    //Console.WriteLine(LeftArm.zaxis_X.ToString() + "," + lockcount.ToString() + "[" + (this.panel2.Width / 2 - 40).ToString() + "]");
+                    lockcount = 1;
+                }
+                if (lockcount == 0)
+                {
+                    LeftArmWorking();
+                    RightArmWoking();
+                }
+                else
+                {
+                    if (lockcount == 1)
+                    {
+                        LeftArmWorking();
+                        if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                        {
+                            RightArmWoking();
+                        }
+
+                    }
+                    else if (lockcount == 2)
+                    {
+                        RightArmWoking();
+                        if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40)
+                        {
+                            LeftArmWorking();
+                        }
+                    }
+                }
             }
             else
             {
-                if (lockcount == 1)
+                if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0))
                 {
-                    LeftArmWorking(); LeftArmWorking();
-                    if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                    if (lockcount == 0)
                     {
-                        RightArmWoking(); RightArmWoking(); RightArmWoking(); RightArmWoking();
+                        if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                        if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                    }
+                    else
+                    {
+                        if (lockcount == 1)
+                        {
+                            if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                            if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                            {
+                                if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                            }
+
+                        }
+                        else if (lockcount == 2)
+                        {
+                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                            if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                        }
                     }
 
                 }
-                else if (lockcount == 2)
+                else
                 {
-                    RightArmWoking(); RightArmWoking(); RightArmWoking(); RightArmWoking();
-                    if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40 - 10 || LeftArm.parall == 2)
+                    LockSetting();
+                    if (Convert.ToInt32(FrontCount.Text.ToString()) == 0 || Convert.ToInt32(MiddleCount.Text.ToString()) > 0)
                     {
-                        LeftArmWorking(); LeftArmWorking();
+
+                        if (lockcount == 0)
+                        {
+                            if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                            RightArmWoking();
+                            //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                        }
+                        else
+                        {
+                            if (lockcount == 1)
+                            {
+                                if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                                if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                                {
+                                    RightArmWoking();
+                                    //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                                }
+
+                            }
+                            else if (lockcount == 2)
+                            {
+                                if (RightArm.seize == 1 || (RightArm.getZZ() >= 0)) { RightArmWoking(); }
+                                if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                            }
+                        }
+
+                    }
+                    if (Convert.ToInt32(FrontCount.Text.ToString()) > 0 || Convert.ToInt32(MiddleCount.Text.ToString()) == 0)
+                    {
+                        if (lockcount == 0)
+                        {
+                            LeftArmWorking();
+                            //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                        }
+                        else
+                        {
+                            if (lockcount == 1)
+                            {
+                                LeftArmWorking();
+                                //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                                if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                                {
+                                    RightArmWoking();
+                                    //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                                }
+
+                            }
+                            else if (lockcount == 2)
+                            {
+                                if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                                if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40 - 10 || LeftArm.parall == 2)
+                                {
+                                    LeftArmWorking();
+                                    //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                                }
+                            }
+                        }
+
                     }
                 }
             }
+
         }
         //左手臂運動
         void LeftArmWorking()
         {
             /********************************左手臂*************************************/
-            if (LeftArm.zaxis_Z == 0)
+            for (int i = 0; i < Convert.ToInt32(speed1.Text); i++)
             {
-                if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                if (LeftArm.zaxis_Z == 0)
                 {
-                    if (LeftArm.parall == 1 && LeftArm.virtical == 0)
+                    if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
                     {
-                        //向下指示
-                        LeftArm.parall = 0;
-                        LeftArm.virtical = 1;
+                        if (LeftArm.parall == 1 && LeftArm.virtical == 0)
+                        {
+                            //向下指示
+                            LeftArm.parall = 0;
+                            LeftArm.virtical = 1;
+                        }
+                        if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                        {
+                            //向左指示
+                            LeftArm.parall = 2;
+                            LeftArm.virtical = 0;
+                        }
                     }
-                    if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                    if (LeftArm.zaxis_X == 65)
                     {
-                        //向左指示
-                        LeftArm.parall = 2;
-                        LeftArm.virtical = 0;
-                    }
-                }
-                if (LeftArm.zaxis_X == 65)
-                {
-                    if ((LeftArm.parall == 0 && LeftArm.virtical == 0) || (LeftArm.parall == 2 && LeftArm.virtical == 0))
-                    {
-                        //向下指示
-                        LeftArm.parall = 0;
-                        LeftArm.virtical = 1;
+                        if ((LeftArm.parall == 0 && LeftArm.virtical == 0) || (LeftArm.parall == 2 && LeftArm.virtical == 0))
+                        {
+                            //向下指示
+                            LeftArm.parall = 0;
+                            LeftArm.virtical = 1;
 
+                        }
+                        if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                        {
+                            //向右指示
+                            LeftArm.parall = 1;
+                            LeftArm.virtical = 0;
+                        }
                     }
-                    if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                }
+                if (LeftArm.zaxis_Z == 40)
+                {
+                    LeftArm.parall = 0;
+                    LeftArm.virtical = 2;
+                    if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
                     {
-                        //向右指示
-                        LeftArm.parall = 1;
-                        LeftArm.virtical = 0;
+                        LeftArm.Release();
+                        MiddleCount.Text = (Convert.ToInt32(MiddleCount.Text) + 1).ToString();
                     }
+                    if (LeftArm.zaxis_X == 65)
+                    {
+                        LeftArm.Seize();
+                        FrontCount.Text = (Convert.ToInt32(FrontCount.Text) - 1).ToString();
+                    }
+
                 }
-            }
-            if (LeftArm.zaxis_Z == 40)
-            {
-                LeftArm.parall = 0;
-                LeftArm.virtical = 2;
-                if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                /**************************************************************************************/
+                if (LeftArm.parall == 2 && LeftArm.virtical == 0)
                 {
-                    LeftArm.Release();
+                    LeftArm.Left();
                 }
-                if (LeftArm.zaxis_X == 65)
+                if (LeftArm.parall == 1 && LeftArm.virtical == 0)
                 {
-                    LeftArm.Seize();
+                    LeftArm.Right();
+                }
+                if (LeftArm.parall == 0 && LeftArm.virtical == 1)
+                {
+                    LeftArm.Down();
+                }
+                if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                {
+                    LeftArm.UP();
                 }
 
             }
-            /**************************************************************************************/
-            if (LeftArm.parall == 2 && LeftArm.virtical == 0)
-            {
-                LeftArm.Left();
-            }
-            if (LeftArm.parall == 1 && LeftArm.virtical == 0)
-            {
-                LeftArm.Right();
-            }
-            if (LeftArm.parall == 0 && LeftArm.virtical == 1)
-            {
-                LeftArm.Down();
-            }
-            if (LeftArm.parall == 0 && LeftArm.virtical == 2)
-            {
-                LeftArm.UP();
-            }
+
         }
         //右手臂運動
         void RightArmWoking()
         {
             /********************************右手臂*************************************/
-            if (RightArm.zaxis_Z == 0)
-            {
-                if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
+            for (int i = 0; i < Convert.ToInt32(speed2.Text); i++) {
+                if (RightArm.zaxis_Z == 0)
                 {
-                    if (RightArm.parall == 2 && RightArm.virtical == 0)
+                    if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
                     {
-                        //向下指示
-                        RightArm.parall = 0;
-                        RightArm.virtical = 1;
+                        if (RightArm.parall == 2 && RightArm.virtical == 0)
+                        {
+                            //向下指示
+                            RightArm.parall = 0;
+                            RightArm.virtical = 1;
+                        }
+                        if (RightArm.parall == 0 && RightArm.virtical == 2)
+                        {
+                            //向右指示
+                            RightArm.parall = 1;
+                            RightArm.virtical = 0;
+                        }
                     }
-                    if (RightArm.parall == 0 && RightArm.virtical == 2)
+                    if (RightArm.zaxis_X == this.panel2.Width - 80)
                     {
-                        //向右指示
-                        RightArm.parall = 1;
-                        RightArm.virtical = 0;
-                    }
-                }
-                if (RightArm.zaxis_X == this.panel2.Width - 80)
-                {
-                    if ((RightArm.parall == 0 && RightArm.virtical == 0) || (RightArm.parall == 0 && RightArm.virtical == 2))
-                    {
-                        //向左指示
-                        RightArm.parall = 2;
-                        RightArm.virtical = 0;
+                        if ((RightArm.parall == 0 && RightArm.virtical == 0) || (RightArm.parall == 0 && RightArm.virtical == 2))
+                        {
+                            //向左指示
+                            RightArm.parall = 2;
+                            RightArm.virtical = 0;
 
+                        }
+                        if (RightArm.parall == 1 && RightArm.virtical == 0)
+                        {
+                            //向下指示
+                            RightArm.parall = 0;
+                            RightArm.virtical = 1;
+                        }
                     }
-                    if (RightArm.parall == 1 && RightArm.virtical == 0)
+                }
+                if (RightArm.zaxis_Z == 40)
+                {
+                    RightArm.parall = 0;
+                    RightArm.virtical = 2;
+                    if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
                     {
-                        //向下指示
-                        RightArm.parall = 0;
-                        RightArm.virtical = 1;
+                        RightArm.Seize();
+                        MiddleCount.Text = (Convert.ToInt32(MiddleCount.Text) - 1).ToString();
                     }
+                    if (RightArm.zaxis_X == this.panel2.Width - 80)
+                    {
+                        RightArm.Release();
+                        EndCount.Text = (Convert.ToInt32(EndCount.Text) + 1).ToString();
+                    }
+
                 }
-            }
-            if (RightArm.zaxis_Z == 40)
-            {
-                RightArm.parall = 0;
-                RightArm.virtical = 2;
-                if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                /**************************************************************************************/
+                if (RightArm.parall == 2 && RightArm.virtical == 0)
                 {
-                    RightArm.Seize();
+                    RightArm.Left();
                 }
-                if (RightArm.zaxis_X == this.panel2.Width - 80)
+                if (RightArm.parall == 1 && RightArm.virtical == 0)
                 {
-                    RightArm.Release();
+                    RightArm.Right();
+                }
+                if (RightArm.parall == 0 && RightArm.virtical == 1)
+                {
+                    RightArm.Down();
+                }
+                if (RightArm.parall == 0 && RightArm.virtical == 2)
+                {
+                    RightArm.UP();
                 }
 
             }
-            /**************************************************************************************/
-            if (RightArm.parall == 2 && RightArm.virtical == 0)
-            {
-                RightArm.Left();
-            }
-            if (RightArm.parall == 1 && RightArm.virtical == 0)
-            {
-                RightArm.Right();
-            }
-            if (RightArm.parall == 0 && RightArm.virtical == 1)
-            {
-                RightArm.Down();
-            }
-            if (RightArm.parall == 0 && RightArm.virtical == 2)
-            {
-                RightArm.UP();
-            }
+
         }
 
         //畫布呈現結果
