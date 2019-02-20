@@ -42,7 +42,9 @@ namespace DoubleArms
         //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            BalanceWorking();
+            Console.WriteLine(lockcount);
+            aa();
+            //BalanceWorking();
             FoodMove();
             Repaint();
         }
@@ -143,18 +145,19 @@ namespace DoubleArms
         //使兩邊手臂運動協調
         void LockSetting()
         {
-            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40-10&& RightArm.zaxis_X + 2 >= this.panel2.Width / 2 + 25)
+            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40-10)
             {
                 lockcount = 1;
             }
-            if (LeftArm.zaxis_X<= this.panel2.Width / 2 - 40&& RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
+            if (LeftArm.zaxis_X<= this.panel2.Width / 2 - 40 && RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
             {
                 lockcount = 0;
             }
-            if (RightArm.zaxis_X + 2 < this.panel2.Width / 2 + 25 && LeftArm.zaxis_X <= this.panel2.Width / 2 - 40)
+            if (RightArm.zaxis_X < this.panel2.Width / 2 + 25 )
             {
                 lockcount = 2;
             }
+            
         }
 
 
@@ -165,19 +168,23 @@ namespace DoubleArms
                 {
                     if (lockcount == 0) {
                         RightArmWoking();
-                        if (1==1/*LX未歸零*/) {
+                        Console.WriteLine("[-----]");
+                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) {
+                            Console.WriteLine("[**********]");
                             LeftArmWorking();
                         }
+
+
                     }
                     if (lockcount == 1) {
                         LeftArmWorking();
-                        if (1==1/*RB<RX*/) {
+                        if (RightArm.zaxis_X>this.panel2.Width/2+25/*RB<RX*/) {
                             RightArmWoking();
                         }
                     }
                     if (lockcount == 2) {
                         RightArmWoking();
-                        if (1 == 1/*LX未歸零&&LX<LB*/)
+                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >=0)&& LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/)
                         {
                             LeftArmWorking();
                         }
@@ -191,48 +198,48 @@ namespace DoubleArms
                     }
                     if (lockcount == 1) {
                         LeftArmWorking();
-                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
                     }
                     if (lockcount == 2) {
                         RightArmWoking();
-                        if (1 == 1/*LB>LX*/) { LeftArmWorking(); }
+                        if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LB>LX*/) { LeftArmWorking(); }
                     }
 
                 }
 
             }
-            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain))) {
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
                 if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
                 {
                     if (lockcount == 0) {
                         RightArmWoking();
-                        if (1 == 1/*LX未歸零*/) { LeftArmWorking(); }
+                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0/*LX未歸零*/) { LeftArmWorking(); }
                     }
                     if (lockcount == 1) {
                         LeftArmWorking();
-                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
                     if (lockcount == 2) {
                         RightArmWoking();
-                        if (1 == 1/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
+                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
                     }
                 }
                 else
                 {
                     if (lockcount == 0) {
                         RightArmWoking();
-                        if (1 == 1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
+                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)|| LeftArm.seize==1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
 
                     }
                     if (lockcount == 1) {
                         LeftArmWorking();
-                        if (1 == 1/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
                     if (lockcount == 2) {
                         RightArmWoking();
-                        if (1 == 1/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
+                        if (((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)||LeftArm.seize==1) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
 
                     }
 
@@ -243,16 +250,43 @@ namespace DoubleArms
 
                 if (lockcount == 0) {
                     LeftArmWorking();
-                    if (1 == 1/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.seize==1||(RightArm.zaxis_X<this.panel2.Width-80&&RightArm.zaxis_Z>=0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
                 if (lockcount == 1) {
                     LeftArmWorking();
-                    if (1 == 1/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >=0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
                 if (lockcount == 2) {
-                    if (1 == 1/*(R.seize==1)*/) { RightArmWoking(); }
-                    if (1 == 1/*(LX<LB)*/) { LeftArmWorking(); }
+                    if (RightArm.seize==1/*(R.seize==1)*/) { RightArmWoking(); }
+                    if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*(LX<LB)*/) { LeftArmWorking(); }
                 }
+            }
+
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0))
+            {
+                if (lockcount == 0)
+                {
+                    if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                    if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                }
+                else
+                {
+                    if (lockcount == 1)
+                    {
+                        if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                        if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                        {
+                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                        }
+
+                    }
+                    else if (lockcount == 2)
+                    {
+                        if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                        if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                    }
+                }
+
             }
 
         }

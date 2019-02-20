@@ -216,7 +216,7 @@
             this.speed2.Name = "speed2";
             this.speed2.Size = new System.Drawing.Size(84, 25);
             this.speed2.TabIndex = 3;
-            this.speed2.Text = "4";
+            this.speed2.Text = "1";
             // 
             // Form1
             // 
