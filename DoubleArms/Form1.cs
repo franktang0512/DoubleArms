@@ -12,12 +12,11 @@ namespace DoubleArms
 {
     public partial class Form1 : Form
     {
-        int lockcount,home;
-        int pf,pm,pl;
-        Arm LeftArm;
-        Arm RightArm;
-        Food LeftFood;
-        Food RightFood;
+        int lockcount, home;
+        int pf, pm, pl;
+
+        Arm LeftArm,RightArm;
+        Food LeftFood,RightFood;
 
         Graphics backGraphics;
         Bitmap backBmp;
@@ -48,28 +47,41 @@ namespace DoubleArms
         //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            try {
-                pf = Convert.ToInt32(FrontCount.Text);
-
-                if (Convert.ToInt32(MiddleCount.Text) <= Convert.ToInt32(LoadConstrain.Text))
+            try
+            {
+                if (Convert.ToInt32(FrontCount.Text) >= 0 && Convert.ToInt32(MiddleCount.Text) >= 0 && Convert.ToInt32(LoadConstrain.Text) >= 0)
                 {
-                    pm = Convert.ToInt32(MiddleCount.Text);
-                    pl = Convert.ToInt32(LoadConstrain.Text);
-                    MakeToHome();
-                    Repaint();
+                    pf = Convert.ToInt32(FrontCount.Text);
+
+                    if (Convert.ToInt32(MiddleCount.Text) <= Convert.ToInt32(LoadConstrain.Text))
+                    {
+                        pm = Convert.ToInt32(MiddleCount.Text);
+                        pl = Convert.ToInt32(LoadConstrain.Text);
+                        MakeToHome();
+                        Repaint();
+                    }
+                    else
+                    {
+                        ForArm1.Stop();
+                        INTERRUPT.Text = "繼續";
+                        MessageBox.Show("中間區域請勿超過負載限制");
+                        FrontCount.Text = pf.ToString();
+                        MiddleCount.Text = pm.ToString();
+                        LoadConstrain.Text = pl.ToString();
+                    }
                 }
                 else
                 {
                     ForArm1.Stop();
                     INTERRUPT.Text = "繼續";
-                    MessageBox.Show("中間區域請勿超過負載限制");
+                    MessageBox.Show("請輸入正整數");
                     FrontCount.Text = pf.ToString();
                     MiddleCount.Text = pm.ToString();
                     LoadConstrain.Text = pl.ToString();
-                    MakeToHome();
-                }            
+                }
             }
-            catch {
+            catch
+            {
                 ForArm1.Stop();
                 MessageBox.Show("數值格式為正整數");
                 FrontCount.Text = pf.ToString();
@@ -171,48 +183,55 @@ namespace DoubleArms
                 RightFood.setXZ(this.panel2.Width - 80, 105);
             }
         }
-        
+
         //設定中間區域取放物的手臂
         void LockSetting()
         {
-            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40-10)
+            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40 - 10)
             {
                 lockcount = 1;
             }
-            if (LeftArm.zaxis_X<= this.panel2.Width / 2 - 40 && RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
+            if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40 && RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
             {
                 lockcount = 0;
             }
-            if (RightArm.zaxis_X < this.panel2.Width / 2 + 25 )
+            if (RightArm.zaxis_X < this.panel2.Width / 2 + 25)
             {
                 lockcount = 2;
             }
-            
+
         }
 
         //使兩邊手臂運動協調
-        void BalanceWorking() {
+        void BalanceWorking()
+        {
             LockSetting();
-            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0)&& (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text)))
+            {
                 if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
                 {
-                    if (lockcount == 0) {
+                    if (lockcount == 0)
+                    {
                         RightArmWoking();
-                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) {
+                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)
+                        {
                             LeftArmWorking();
                         }
 
 
                     }
-                    if (lockcount == 1) {
+                    if (lockcount == 1)
+                    {
                         LeftArmWorking();
-                        if (RightArm.zaxis_X>this.panel2.Width/2+25/*RB<RX*/) {
+                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/)
+                        {
                             RightArmWoking();
                         }
                     }
-                    if (lockcount == 2) {
+                    if (lockcount == 2)
+                    {
                         RightArmWoking();
-                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >=0)&& LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/)
+                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/)
                         {
                             LeftArmWorking();
                         }
@@ -220,15 +239,18 @@ namespace DoubleArms
                 }
                 else
                 {
-                    if (lockcount == 0) {
+                    if (lockcount == 0)
+                    {
                         RightArmWoking();
                         LeftArmWorking();
                     }
-                    if (lockcount == 1) {
+                    if (lockcount == 1)
+                    {
                         LeftArmWorking();
                         if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
                     }
-                    if (lockcount == 2) {
+                    if (lockcount == 2)
+                    {
                         RightArmWoking();
                         if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LB>LX*/) { LeftArmWorking(); }
                     }
@@ -236,56 +258,67 @@ namespace DoubleArms
                 }
 
             }
-            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text)))
+            {
                 if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
                 {
-                    if (lockcount == 0) {
+                    if (lockcount == 0)
+                    {
                         RightArmWoking();
                         if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0/*LX未歸零*/) { LeftArmWorking(); }
                     }
-                    if (lockcount == 1) {
+                    if (lockcount == 1)
+                    {
                         LeftArmWorking();
                         if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
-                    if (lockcount == 2) {
+                    if (lockcount == 2)
+                    {
                         RightArmWoking();
                         if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
                     }
                 }
                 else
                 {
-                    if (lockcount == 0) {
+                    if (lockcount == 0)
+                    {
                         RightArmWoking();
-                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)|| LeftArm.seize==1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
+                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || LeftArm.seize == 1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
 
                     }
-                    if (lockcount == 1) {
+                    if (lockcount == 1)
+                    {
                         LeftArmWorking();
                         if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
-                    if (lockcount == 2) {
+                    if (lockcount == 2)
+                    {
                         RightArmWoking();
-                        if (((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)||LeftArm.seize==1) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
+                        if (((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || LeftArm.seize == 1) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
 
                     }
 
                 }
 
             }
-            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0)) {
+            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0))
+            {
 
-                if (lockcount == 0) {
+                if (lockcount == 0)
+                {
                     LeftArmWorking();
-                    if (RightArm.seize==1||(RightArm.zaxis_X<this.panel2.Width-80&&RightArm.zaxis_Z>=0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
-                if (lockcount == 1) {
+                if (lockcount == 1)
+                {
                     LeftArmWorking();
-                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >=0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
-                if (lockcount == 2) {
-                    if (RightArm.seize==1/*(R.seize==1)*/) { RightArmWoking(); }
+                if (lockcount == 2)
+                {
+                    if (RightArm.seize == 1/*(R.seize==1)*/) { RightArmWoking(); }
                     if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*(LX<LB)*/) { LeftArmWorking(); }
                 }
             }
@@ -318,7 +351,7 @@ namespace DoubleArms
             }
 
         }
-             
+
         //左手臂運動
         void LeftArmWorking()
         {
@@ -400,7 +433,8 @@ namespace DoubleArms
         void RightArmWoking()
         {
             /********************************右手臂*************************************/
-            for (int i = 0; i < Convert.ToInt32(speed2.Text); i++) {
+            for (int i = 0; i < Convert.ToInt32(speed2.Text); i++)
+            {
                 if (RightArm.zaxis_Z == 0)
                 {
                     if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
@@ -473,7 +507,8 @@ namespace DoubleArms
 
         }
 
-        void MakeToHome() {
+        void MakeToHome()
+        {
             if (home == 0)
             {
                 BalanceWorking();
@@ -481,7 +516,6 @@ namespace DoubleArms
             }
             if (home == 1)
             {
-
                 if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0))
                 {
                     LeftArm.seize = 0;
@@ -517,8 +551,6 @@ namespace DoubleArms
                     ForArm1.Stop();
                     START.Enabled = true;
                     Home.Enabled = true;
-
-
                 }
             }
 
@@ -577,7 +609,6 @@ namespace DoubleArms
             {
                 ForArm1.Stop();
                 INTERRUPT.Text = "繼續";
-
             }
             else
             {
@@ -601,7 +632,8 @@ namespace DoubleArms
                 home = 1;
                 Home.Enabled = false;
             }
-            else {
+            else
+            {
                 MessageBox.Show("手臂位置已於初始位置");
             }
         }

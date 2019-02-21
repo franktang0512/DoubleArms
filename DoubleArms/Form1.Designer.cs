@@ -137,7 +137,7 @@
             this.LoadConstrain.Name = "LoadConstrain";
             this.LoadConstrain.Size = new System.Drawing.Size(100, 22);
             this.LoadConstrain.TabIndex = 3;
-            this.LoadConstrain.Text = "10";
+            this.LoadConstrain.Text = "99999";
             // 
             // EndCount
             // 
@@ -161,7 +161,7 @@
             this.FrontCount.Name = "FrontCount";
             this.FrontCount.Size = new System.Drawing.Size(100, 22);
             this.FrontCount.TabIndex = 0;
-            this.FrontCount.Text = "9";
+            this.FrontCount.Text = "99999";
             // 
             // panel2
             // 
