@@ -12,7 +12,8 @@ namespace DoubleArms
 {
     public partial class Form1 : Form
     {
-        int lockcount;
+        int lockcount,home;
+        int pf,pm,pl;
         Arm LeftArm;
         Arm RightArm;
         Food LeftFood;
@@ -25,7 +26,12 @@ namespace DoubleArms
         {
             InitializeComponent();
             this.INTERRUPT.Enabled = false;
+            EndCount.Enabled = false;
             lockcount = 0;
+            home = 0;
+            pf = Convert.ToInt32(FrontCount.Text);
+            pm = Convert.ToInt32(MiddleCount.Text);
+            pl = Convert.ToInt32(LoadConstrain.Text);
 
             LeftArm = new Arm("left", 0, 40, 65, 0);
             RightArm = new Arm("right", this.panel2.Width - 80, 40, this.panel2.Width - 80, 0);
@@ -42,10 +48,37 @@ namespace DoubleArms
         //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            BalanceWorking();
-            FoodMove();
-            Repaint();
+            try {
+                pf = Convert.ToInt32(FrontCount.Text);
+
+                if (Convert.ToInt32(MiddleCount.Text) <= Convert.ToInt32(LoadConstrain.Text))
+                {
+                    pm = Convert.ToInt32(MiddleCount.Text);
+                    pl = Convert.ToInt32(LoadConstrain.Text);
+                    MakeToHome();
+                    Repaint();
+                }
+                else
+                {
+                    ForArm1.Stop();
+                    INTERRUPT.Text = "繼續";
+                    MessageBox.Show("中間區域請勿超過負載限制");
+                    FrontCount.Text = pf.ToString();
+                    MiddleCount.Text = pm.ToString();
+                    LoadConstrain.Text = pl.ToString();
+                    MakeToHome();
+                }            
+            }
+            catch {
+                ForArm1.Stop();
+                MessageBox.Show("數值格式為正整數");
+                FrontCount.Text = pf.ToString();
+                MiddleCount.Text = pm.ToString();
+                LoadConstrain.Text = pl.ToString();
+                ForArm1.Start();
+            }
         }
+        //重新繪圖
         void Repaint()
         {
             backGraphics.Clear(Color.White);
@@ -86,14 +119,13 @@ namespace DoubleArms
             }
             this.panel2.CreateGraphics().DrawImageUnscaled(backBmp, 0, 0);
         }
-
-        //Food移動的條件
+        //Food移動
         void FoodMove()
         {
             LeftFoodMove();
             RightFoodMove();
         }
-        //左Food
+        //左Food移動的條件
         void LeftFoodMove()
         {
             if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z > 10 && LeftArm.parall == 0 && LeftArm.virtical == 1)
@@ -116,7 +148,7 @@ namespace DoubleArms
                 LeftFood.setXZ((this.panel2.Width - 15) / 2, 105);
             }
         }
-        //右Food
+        //右Food移動的條件
         void RightFoodMove()
         {
             if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z > 10 && RightArm.parall == 0 && RightArm.virtical == 1)
@@ -140,7 +172,7 @@ namespace DoubleArms
             }
         }
         
-        //使兩邊手臂運動協調
+        //設定中間區域取放物的手臂
         void LockSetting()
         {
             if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40-10)
@@ -158,7 +190,7 @@ namespace DoubleArms
             
         }
 
-
+        //使兩邊手臂運動協調
         void BalanceWorking() {
             LockSetting();
             if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0)&& (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
@@ -166,9 +198,7 @@ namespace DoubleArms
                 {
                     if (lockcount == 0) {
                         RightArmWoking();
-                        Console.WriteLine("[-----]");
                         if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) {
-                            Console.WriteLine("[**********]");
                             LeftArmWorking();
                         }
 
@@ -288,8 +318,7 @@ namespace DoubleArms
             }
 
         }
-
-       
+             
         //左手臂運動
         void LeftArmWorking()
         {
@@ -444,6 +473,57 @@ namespace DoubleArms
 
         }
 
+        void MakeToHome() {
+            if (home == 0)
+            {
+                BalanceWorking();
+                FoodMove();
+            }
+            if (home == 1)
+            {
+
+                if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0))
+                {
+                    LeftArm.seize = 0;
+                    RightArm.seize = 0;
+                    LeftFood.setColor(0);
+                    RightFood.setColor(0);
+                    if (LeftArm.zaxis_Z > 0)
+                    {
+                        LeftArm.UP();
+                    }
+                    else if (LeftArm.zaxis_Z == 0)
+                    {
+                        if (LeftArm.zaxis_X > 65)
+                        {
+                            LeftArm.Left();
+                        }
+                    }
+                    if (RightArm.zaxis_Z > 0)
+                    {
+                        RightArm.UP();
+                    }
+                    else if (RightArm.zaxis_Z == 0)
+                    {
+                        if (RightArm.zaxis_X < this.panel2.Width - 80)
+                        {
+                            RightArm.Right();
+                        }
+                    }
+                }
+                else
+                {
+                    home = 0;
+                    ForArm1.Stop();
+                    START.Enabled = true;
+                    Home.Enabled = true;
+
+
+                }
+            }
+
+        }
+
         //畫布呈現結果
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -513,13 +593,16 @@ namespace DoubleArms
 
         private void Home_Click(object sender, EventArgs e)
         {
-            try
+            if (!START.Enabled)
             {
-
+                START.Enabled = false;
+                this.INTERRUPT.Enabled = false;
+                this.INTERRUPT.Text = "中斷";
+                home = 1;
+                Home.Enabled = false;
             }
-            catch
-            {
-
+            else {
+                MessageBox.Show("手臂位置已於初始位置");
             }
         }
     }
