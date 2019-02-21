@@ -15,8 +15,8 @@ namespace DoubleArms
         int lockcount, home;
         int pf, pm, pl;
 
-        Arm LeftArm,RightArm;
-        Food LeftFood,RightFood;
+        Arm LeftArm, RightArm;
+        Food LeftFood, RightFood;
 
         Graphics backGraphics;
         Bitmap backBmp;
@@ -102,14 +102,14 @@ namespace DoubleArms
             backGraphics.FillRectangle(Brushes.Gray, this.panel2.Width / 2 + 25, 95, 15, 20);
 
             //x軸長方形L
-            backGraphics.FillRectangle(Brushes.BlueViolet, LeftArm.xaxis_X, LeftArm.xaxis_Z, LeftArm.xaxis_Width, LeftArm.xaxis_Height);
+            backGraphics.FillRectangle(Brushes.BlueViolet, LeftArm.getXX(), LeftArm.getXZ(), LeftArm.getXWidth(), LeftArm.getXHeight());
             //z軸長方形L
-            backGraphics.FillRectangle(Brushes.Navy, LeftArm.zaxis_X, LeftArm.zaxis_Z, LeftArm.zaxis_Width, LeftArm.zaxis_Height);
+            backGraphics.FillRectangle(Brushes.Navy, LeftArm.getZX(), LeftArm.getZZ(), LeftArm.getZWidth(), LeftArm.getZHeight());
 
             //x軸長方形R
-            backGraphics.FillRectangle(Brushes.BlueViolet, RightArm.xaxis_X, RightArm.xaxis_Z, RightArm.xaxis_Width, RightArm.xaxis_Height);
+            backGraphics.FillRectangle(Brushes.BlueViolet, RightArm.getXX(), RightArm.getXZ(), RightArm.getXWidth(), RightArm.getXHeight());
             //z軸長方形R
-            backGraphics.FillRectangle(Brushes.Navy, RightArm.zaxis_X, RightArm.zaxis_Z, RightArm.zaxis_Width, RightArm.zaxis_Height);
+            backGraphics.FillRectangle(Brushes.Navy, RightArm.getZX(), RightArm.getZZ(), RightArm.getZWidth(), RightArm.getZHeight());
 
             //左邊Food
             if (LeftFood.getColor() == 0)
@@ -140,22 +140,22 @@ namespace DoubleArms
         //左Food移動的條件
         void LeftFoodMove()
         {
-            if (LeftArm.zaxis_X == 65 && LeftArm.zaxis_Z > 10 && LeftArm.parall == 0 && LeftArm.virtical == 1)
+            if (LeftArm.getZX() == 65 && LeftArm.getZZ() > 10 && LeftArm.getParall() == 0 && LeftArm.getVirtical() == 1)
             {
                 this.LeftFood.setXZ(65, 105);
                 LeftFood.setColor(1);
             }
 
-            if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2 && (LeftArm.zaxis_Z < 10) && LeftArm.parall == 0 && LeftArm.virtical == 2)
+            if (LeftArm.getZX() == (this.panel2.Width - 15) / 2 && (LeftArm.getZZ() < 10) && LeftArm.getParall() == 0 && LeftArm.getVirtical() == 2)
             {
-                LeftArm.seize = 0;
+                LeftArm.setSeize(0);
                 LeftFood.setColor(0);
             }
-            if (LeftArm.seize == 1)
+            if (LeftArm.getSeize() == 1)
             {
-                LeftFood.setXZ(LeftArm.zaxis_X, LeftArm.zaxis_Z + LeftArm.zaxis_Height);
+                LeftFood.setXZ(LeftArm.getZX(), LeftArm.getZZ() + LeftArm.getZHeight());
             }
-            if (LeftArm.seize == 2)
+            if (LeftArm.getSeize() == 2)
             {
                 LeftFood.setXZ((this.panel2.Width - 15) / 2, 105);
             }
@@ -163,22 +163,22 @@ namespace DoubleArms
         //右Food移動的條件
         void RightFoodMove()
         {
-            if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2 && RightArm.zaxis_Z > 10 && RightArm.parall == 0 && RightArm.virtical == 1)
+            if (RightArm.getZX() == (this.panel2.Width - 15) / 2 && RightArm.getZZ() > 10 && RightArm.getParall() == 0 && RightArm.getVirtical() == 1)
             {
                 RightFood.setXZ((this.panel2.Width - 15) / 2, 105);
                 RightFood.setColor(1);
             }
 
-            if (RightArm.zaxis_X == this.panel2.Width - 80 && RightArm.zaxis_Z < 10 && RightArm.parall == 0 && RightArm.virtical == 2)
+            if (RightArm.getZX() == this.panel2.Width - 80 && RightArm.getZZ() < 10 && RightArm.getParall() == 0 && RightArm.getVirtical() == 2)
             {
-                RightArm.seize = 0;
+                RightArm.setSeize(0);
                 RightFood.setColor(0);
             }
-            if (RightArm.seize == 1)
+            if (RightArm.getSeize() == 1)
             {
-                RightFood.setXZ(RightArm.zaxis_X, RightArm.zaxis_Z + RightArm.zaxis_Height);
+                RightFood.setXZ(RightArm.getZX(), RightArm.getZZ() + RightArm.getZHeight());
             }
-            if (RightArm.seize == 2)
+            if (RightArm.getSeize() == 2)
             {
                 RightFood.setXZ(this.panel2.Width - 80, 105);
             }
@@ -187,15 +187,15 @@ namespace DoubleArms
         //設定中間區域取放物的手臂
         void LockSetting()
         {
-            if (LeftArm.zaxis_X > this.panel2.Width / 2 - 40 - 10)
+            if (LeftArm.getZX() > this.panel2.Width / 2 - 40 - 10)
             {
                 lockcount = 1;
             }
-            if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40 && RightArm.zaxis_X >= this.panel2.Width / 2 + 25)
+            if (LeftArm.getZX() <= this.panel2.Width / 2 - 40 && RightArm.getZX() >= this.panel2.Width / 2 + 25)
             {
                 lockcount = 0;
             }
-            if (RightArm.zaxis_X < this.panel2.Width / 2 + 25)
+            if (RightArm.getZX() < this.panel2.Width / 2 + 25)
             {
                 lockcount = 2;
             }
@@ -213,7 +213,7 @@ namespace DoubleArms
                     if (lockcount == 0)
                     {
                         RightArmWoking();
-                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0)
+                        if (LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0)
                         {
                             LeftArmWorking();
                         }
@@ -223,7 +223,7 @@ namespace DoubleArms
                     if (lockcount == 1)
                     {
                         LeftArmWorking();
-                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/)
+                        if (RightArm.getZX() > this.panel2.Width / 2 + 25/*RB<RX*/)
                         {
                             RightArmWoking();
                         }
@@ -231,7 +231,7 @@ namespace DoubleArms
                     if (lockcount == 2)
                     {
                         RightArmWoking();
-                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/)
+                        if ((LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0) && LeftArm.getZX() < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/)
                         {
                             LeftArmWorking();
                         }
@@ -247,12 +247,12 @@ namespace DoubleArms
                     if (lockcount == 1)
                     {
                         LeftArmWorking();
-                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.getZX() > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
                     }
                     if (lockcount == 2)
                     {
                         RightArmWoking();
-                        if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LB>LX*/) { LeftArmWorking(); }
+                        if (LeftArm.getZX() < this.panel2.Width / 2 - 40/*LB>LX*/) { LeftArmWorking(); }
                     }
 
                 }
@@ -265,18 +265,18 @@ namespace DoubleArms
                     if (lockcount == 0)
                     {
                         RightArmWoking();
-                        if (LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0/*LX未歸零*/) { LeftArmWorking(); }
+                        if (LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0/*LX未歸零*/) { LeftArmWorking(); }
                     }
                     if (lockcount == 1)
                     {
                         LeftArmWorking();
-                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.getZX() > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
                     if (lockcount == 2)
                     {
                         RightArmWoking();
-                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
+                        if ((LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0) && LeftArm.getZX() < this.panel2.Width / 2 - 40/*LX未歸零&&LX<LB*/) { LeftArmWorking(); }
                     }
                 }
                 else
@@ -284,19 +284,19 @@ namespace DoubleArms
                     if (lockcount == 0)
                     {
                         RightArmWoking();
-                        if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || LeftArm.seize == 1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
+                        if ((LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0) || LeftArm.getSeize() == 1/*LX未歸零||L.seize==1*/) { LeftArmWorking(); }
 
                     }
                     if (lockcount == 1)
                     {
                         LeftArmWorking();
-                        if (RightArm.zaxis_X > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
+                        if (RightArm.getZX() > this.panel2.Width / 2 + 25/*RB<RX*/) { RightArmWoking(); }
 
                     }
                     if (lockcount == 2)
                     {
                         RightArmWoking();
-                        if (((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || LeftArm.seize == 1) && LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
+                        if (((LeftArm.getZX() > 65 && LeftArm.getZZ() >= 0) || LeftArm.getSeize() == 1) && LeftArm.getZX() < this.panel2.Width / 2 - 40/*LX<LB &&(LX未歸零||L.seize==1)*/) { LeftArmWorking(); }
 
                     }
 
@@ -309,17 +309,17 @@ namespace DoubleArms
                 if (lockcount == 0)
                 {
                     LeftArmWorking();
-                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.getSeize() == 1 || (RightArm.getZX() < this.panel2.Width - 80 && RightArm.getZZ() >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
                 if (lockcount == 1)
                 {
                     LeftArmWorking();
-                    if (RightArm.seize == 1 || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
+                    if (RightArm.getSeize() == 1 || (RightArm.getZX() < this.panel2.Width - 80 && RightArm.getZZ() >= 0)/*(RX未歸零||R.seize==1)*/) { RightArmWoking(); }
                 }
                 if (lockcount == 2)
                 {
-                    if (RightArm.seize == 1/*(R.seize==1)*/) { RightArmWoking(); }
-                    if (LeftArm.zaxis_X < this.panel2.Width / 2 - 40/*(LX<LB)*/) { LeftArmWorking(); }
+                    if (RightArm.getSeize() == 1/*(R.seize==1)*/) { RightArmWoking(); }
+                    if (LeftArm.getZX() < this.panel2.Width / 2 - 40/*(LX<LB)*/) { LeftArmWorking(); }
                 }
             }
 
@@ -327,24 +327,24 @@ namespace DoubleArms
             {
                 if (lockcount == 0)
                 {
-                    if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
-                    if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                    if (LeftArm.getSeize() == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                    if (RightArm.getSeize() == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
                 }
                 else
                 {
                     if (lockcount == 1)
                     {
-                        if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                        if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
+                        if (LeftArm.getSeize() == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
+                        if (RightArm.getZX() >= this.panel2.Width / 2 + 25 + 20 || RightArm.getParall() == 1)
                         {
-                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                            if (RightArm.getSeize() == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
                         }
 
                     }
                     else if (lockcount == 2)
                     {
-                        if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                        if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
+                        if (RightArm.getSeize() == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
+                        if (LeftArm.getSeize() == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
                     }
                 }
 
@@ -358,50 +358,50 @@ namespace DoubleArms
             /********************************左手臂*************************************/
             for (int i = 0; i < Convert.ToInt32(speed1.Text); i++)
             {
-                if (LeftArm.zaxis_Z == 0)
+                if (LeftArm.getZZ() == 0)
                 {
-                    if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                    if (LeftArm.getZX() == (this.panel2.Width - 15) / 2)
                     {
-                        if (LeftArm.parall == 1 && LeftArm.virtical == 0)
+                        if (LeftArm.getParall() == 1 && LeftArm.getVirtical() == 0)
                         {
                             //向下指示
-                            LeftArm.parall = 0;
-                            LeftArm.virtical = 1;
+                            LeftArm.setParall(0);
+                            LeftArm.setVirtical(1);
                         }
-                        if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                        if (LeftArm.getParall() == 0 && LeftArm.getVirtical() == 2)
                         {
                             //向左指示
-                            LeftArm.parall = 2;
-                            LeftArm.virtical = 0;
+                            LeftArm.setParall(2);
+                            LeftArm.setVirtical(0);
                         }
                     }
-                    if (LeftArm.zaxis_X == 65)
+                    if (LeftArm.getZX() == 65)
                     {
-                        if ((LeftArm.parall == 0 && LeftArm.virtical == 0) || (LeftArm.parall == 2 && LeftArm.virtical == 0))
+                        if ((LeftArm.getParall() == 0 && LeftArm.getVirtical() == 0) || (LeftArm.getParall() == 2 && LeftArm.getVirtical() == 0))
                         {
                             //向下指示
-                            LeftArm.parall = 0;
-                            LeftArm.virtical = 1;
+                            LeftArm.setParall(0);
+                            LeftArm.setVirtical(1);
 
                         }
-                        if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                        if (LeftArm.getParall() == 0 && LeftArm.getVirtical() == 2)
                         {
                             //向右指示
-                            LeftArm.parall = 1;
-                            LeftArm.virtical = 0;
+                            LeftArm.setParall(1);
+                            LeftArm.setVirtical(0);
                         }
                     }
                 }
-                if (LeftArm.zaxis_Z == 40)
+                if (LeftArm.getZZ() == 40)
                 {
-                    LeftArm.parall = 0;
-                    LeftArm.virtical = 2;
-                    if (LeftArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                    LeftArm.setParall(0);
+                    LeftArm.setVirtical(2);
+                    if (LeftArm.getZX() == (this.panel2.Width - 15) / 2)
                     {
                         LeftArm.Release();
                         MiddleCount.Text = (Convert.ToInt32(MiddleCount.Text) + 1).ToString();
                     }
-                    if (LeftArm.zaxis_X == 65)
+                    if (LeftArm.getZX() == 65)
                     {
                         LeftArm.Seize();
                         FrontCount.Text = (Convert.ToInt32(FrontCount.Text) - 1).ToString();
@@ -409,19 +409,19 @@ namespace DoubleArms
 
                 }
                 /**************************************************************************************/
-                if (LeftArm.parall == 2 && LeftArm.virtical == 0)
+                if (LeftArm.getParall() == 2 && LeftArm.getVirtical() == 0)
                 {
                     LeftArm.Left();
                 }
-                if (LeftArm.parall == 1 && LeftArm.virtical == 0)
+                if (LeftArm.getParall() == 1 && LeftArm.getVirtical() == 0)
                 {
                     LeftArm.Right();
                 }
-                if (LeftArm.parall == 0 && LeftArm.virtical == 1)
+                if (LeftArm.getParall() == 0 && LeftArm.getVirtical() == 1)
                 {
                     LeftArm.Down();
                 }
-                if (LeftArm.parall == 0 && LeftArm.virtical == 2)
+                if (LeftArm.getParall() == 0 && LeftArm.getVirtical() == 2)
                 {
                     LeftArm.UP();
                 }
@@ -435,50 +435,50 @@ namespace DoubleArms
             /********************************右手臂*************************************/
             for (int i = 0; i < Convert.ToInt32(speed2.Text); i++)
             {
-                if (RightArm.zaxis_Z == 0)
+                if (RightArm.getZZ() == 0)
                 {
-                    if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                    if (RightArm.getZX() == (this.panel2.Width - 15) / 2)
                     {
-                        if (RightArm.parall == 2 && RightArm.virtical == 0)
+                        if (RightArm.getParall() == 2 && RightArm.getVirtical() == 0)
                         {
                             //向下指示
-                            RightArm.parall = 0;
-                            RightArm.virtical = 1;
+                            RightArm.setParall(0);
+                            RightArm.setVirtical(1);
                         }
-                        if (RightArm.parall == 0 && RightArm.virtical == 2)
+                        if (RightArm.getParall() == 0 && RightArm.getVirtical() == 2)
                         {
                             //向右指示
-                            RightArm.parall = 1;
-                            RightArm.virtical = 0;
+                            RightArm.setParall(1);
+                            RightArm.setVirtical(0);
                         }
                     }
-                    if (RightArm.zaxis_X == this.panel2.Width - 80)
+                    if (RightArm.getZX() == this.panel2.Width - 80)
                     {
-                        if ((RightArm.parall == 0 && RightArm.virtical == 0) || (RightArm.parall == 0 && RightArm.virtical == 2))
+                        if ((RightArm.getParall() == 0 && RightArm.getVirtical() == 0) || (RightArm.getParall() == 0 && RightArm.getVirtical() == 2))
                         {
                             //向左指示
-                            RightArm.parall = 2;
-                            RightArm.virtical = 0;
+                            RightArm.setParall(2);
+                            RightArm.setVirtical(0);
 
                         }
-                        if (RightArm.parall == 1 && RightArm.virtical == 0)
+                        if (RightArm.getParall() == 1 && RightArm.getVirtical() == 0)
                         {
                             //向下指示
-                            RightArm.parall = 0;
-                            RightArm.virtical = 1;
+                            RightArm.setParall(0);
+                            RightArm.setVirtical(1);
                         }
                     }
                 }
-                if (RightArm.zaxis_Z == 40)
+                if (RightArm.getZZ() == 40)
                 {
-                    RightArm.parall = 0;
-                    RightArm.virtical = 2;
-                    if (RightArm.zaxis_X == (this.panel2.Width - 15) / 2)
+                    RightArm.setParall(0);
+                    RightArm.setVirtical(2);
+                    if (RightArm.getZX() == (this.panel2.Width - 15) / 2)
                     {
                         RightArm.Seize();
                         MiddleCount.Text = (Convert.ToInt32(MiddleCount.Text) - 1).ToString();
                     }
-                    if (RightArm.zaxis_X == this.panel2.Width - 80)
+                    if (RightArm.getZX() == this.panel2.Width - 80)
                     {
                         RightArm.Release();
                         EndCount.Text = (Convert.ToInt32(EndCount.Text) + 1).ToString();
@@ -486,19 +486,19 @@ namespace DoubleArms
 
                 }
                 /**************************************************************************************/
-                if (RightArm.parall == 2 && RightArm.virtical == 0)
+                if (RightArm.getParall() == 2 && RightArm.getVirtical() == 0)
                 {
                     RightArm.Left();
                 }
-                if (RightArm.parall == 1 && RightArm.virtical == 0)
+                if (RightArm.getParall() == 1 && RightArm.getVirtical() == 0)
                 {
                     RightArm.Right();
                 }
-                if (RightArm.parall == 0 && RightArm.virtical == 1)
+                if (RightArm.getParall() == 0 && RightArm.getVirtical() == 1)
                 {
                     RightArm.Down();
                 }
-                if (RightArm.parall == 0 && RightArm.virtical == 2)
+                if (RightArm.getParall() == 0 && RightArm.getVirtical() == 2)
                 {
                     RightArm.UP();
                 }
@@ -516,44 +516,53 @@ namespace DoubleArms
             }
             if (home == 1)
             {
-                if ((LeftArm.zaxis_X > 65 && LeftArm.zaxis_Z >= 0) || (RightArm.zaxis_X < this.panel2.Width - 80 && RightArm.zaxis_Z >= 0))
+                if ((LeftArm.getZX() > 65 || LeftArm.getZZ() >= 0) || (RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() >= 0))
                 {
-                    LeftArm.seize = 0;
-                    RightArm.seize = 0;
+                    LeftArm.setSeize(2);
+                    RightArm.setSeize(2);
                     LeftFood.setColor(0);
                     RightFood.setColor(0);
-                    if (LeftArm.zaxis_Z > 0)
+                    if (LeftArm.getZZ() > 0)
                     {
                         LeftArm.UP();
                     }
-                    else if (LeftArm.zaxis_Z == 0)
+                    else if (LeftArm.getZZ() == 0)
                     {
-                        if (LeftArm.zaxis_X > 65)
+                        if (LeftArm.getZX() > 65)
                         {
                             LeftArm.Left();
                         }
                     }
-                    if (RightArm.zaxis_Z > 0)
+                    if (RightArm.getZZ() > 0)
                     {
                         RightArm.UP();
                     }
-                    else if (RightArm.zaxis_Z == 0)
+                    else if (RightArm.getZZ() == 0)
                     {
-                        if (RightArm.zaxis_X < this.panel2.Width - 80)
+                        if (RightArm.getZX() < this.panel2.Width - 80)
                         {
                             RightArm.Right();
                         }
                     }
+
                 }
-                else
+                if (LeftArm.getZX() == 65 && LeftArm.getZZ() == 0 && (RightArm.getZX() == this.panel2.Width - 80 && RightArm.getZZ() == 0))
                 {
                     home = 0;
                     ForArm1.Stop();
-                    START.Enabled = true;
-                    Home.Enabled = true;
+                    FrontCount.Enabled = true;
+                    MiddleCount.Enabled = true;
+                    LoadConstrain.Enabled = true;
+
+                    LeftArm.setSeize(0);
+                    LeftArm.setParall(0);
+                    LeftArm.setVirtical(0);
+
+                    RightArm.setSeize(0);
+                    RightArm.setParall(0);
+                    RightArm.setVirtical(0);
                 }
             }
-
         }
 
         //畫布呈現結果
@@ -567,14 +576,14 @@ namespace DoubleArms
             e.Graphics.FillRectangle(Brushes.Gray, this.panel2.Width / 2 + 25, 95, 15, 20);
 
             //x軸長方形L
-            e.Graphics.FillRectangle(Brushes.BlueViolet, LeftArm.xaxis_X, LeftArm.xaxis_Z, LeftArm.xaxis_Width, LeftArm.xaxis_Height);
+            e.Graphics.FillRectangle(Brushes.BlueViolet, LeftArm.getXX(), LeftArm.getXZ(), LeftArm.getXWidth(), LeftArm.getXHeight());
             //z軸長方形L
-            e.Graphics.FillRectangle(Brushes.Navy, LeftArm.zaxis_X, LeftArm.zaxis_Z, LeftArm.zaxis_Width, LeftArm.zaxis_Height);
+            e.Graphics.FillRectangle(Brushes.Navy, LeftArm.getZX(), LeftArm.getZZ(), LeftArm.getZWidth(), LeftArm.getZHeight());
 
             //x軸長方形R
-            e.Graphics.FillRectangle(Brushes.BlueViolet, RightArm.xaxis_X, RightArm.xaxis_Z, RightArm.xaxis_Width, RightArm.xaxis_Height);
+            e.Graphics.FillRectangle(Brushes.BlueViolet, RightArm.getXX(), RightArm.getXZ(), RightArm.getXWidth(), RightArm.getXHeight());
             //z軸長方形R
-            e.Graphics.FillRectangle(Brushes.Navy, RightArm.zaxis_X, RightArm.zaxis_Z, RightArm.zaxis_Width, RightArm.zaxis_Height);
+            e.Graphics.FillRectangle(Brushes.Navy, RightArm.getZX(), RightArm.getZZ(), RightArm.getZWidth(), RightArm.getZHeight());
 
             //左邊Food
             if (LeftFood.getColor() == 0)
@@ -601,6 +610,9 @@ namespace DoubleArms
             ForArm1.Start();
             START.Enabled = false;
             this.INTERRUPT.Enabled = true;
+            FrontCount.Enabled = false;
+            MiddleCount.Enabled = false;
+            LoadConstrain.Enabled = false;
         }
 
         private void INTERRUPT_Click(object sender, EventArgs e)
@@ -609,11 +621,19 @@ namespace DoubleArms
             {
                 ForArm1.Stop();
                 INTERRUPT.Text = "繼續";
+                Home.Enabled = false;
+                FrontCount.Enabled = true;
+                MiddleCount.Enabled = true;
+                LoadConstrain.Enabled = true;
             }
             else
             {
                 ForArm1.Start();
                 INTERRUPT.Text = "中斷";
+                Home.Enabled = true;
+                FrontCount.Enabled = false;
+                MiddleCount.Enabled = false;
+                LoadConstrain.Enabled = false;
             }
         }
 
@@ -624,17 +644,22 @@ namespace DoubleArms
 
         private void Home_Click(object sender, EventArgs e)
         {
-            if (!START.Enabled)
+            home = 1;
+
+            if (START.Enabled)
             {
-                START.Enabled = false;
-                this.INTERRUPT.Enabled = false;
-                this.INTERRUPT.Text = "中斷";
-                home = 1;
-                Home.Enabled = false;
+                MessageBox.Show("手臂位置已於初始階段");
             }
             else
             {
-                MessageBox.Show("手臂位置已於初始位置");
+                this.INTERRUPT.Enabled = false;
+                this.INTERRUPT.Text = "中斷";                
+
+                START.Enabled = true;
+                FrontCount.Enabled = true;
+                MiddleCount.Enabled = true;
+                LoadConstrain.Enabled = true;
+
             }
         }
     }
