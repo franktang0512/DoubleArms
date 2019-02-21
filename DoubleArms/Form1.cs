@@ -42,9 +42,7 @@ namespace DoubleArms
         //Timer 定時跑出各種狀態
         private void ForArm1_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine(lockcount);
-            aa();
-            //BalanceWorking();
+            BalanceWorking();
             FoodMove();
             Repaint();
         }
@@ -161,7 +159,7 @@ namespace DoubleArms
         }
 
 
-        void aa() {
+        void BalanceWorking() {
             LockSetting();
             if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0)&& (Convert.ToInt32(MiddleCount.Text.ToString()) <= Convert.ToInt32(LoadConstrain.Text))) {
                 if (Convert.ToInt32(MiddleCount.Text.ToString()) == Convert.ToInt32(LoadConstrain.Text))
@@ -291,140 +289,7 @@ namespace DoubleArms
 
         }
 
-        void BalanceWorking()
-        {
-            LockSetting();
-            Console.WriteLine(lockcount);
-            if ((Convert.ToInt32(FrontCount.Text.ToString()) > 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) > 0))
-            {
-                if (LeftArm.zaxis_X >= this.panel2.Width / 2 - 40)
-                {
-                    //Console.WriteLine(LeftArm.zaxis_X.ToString() + "," + lockcount.ToString() + "[" + (this.panel2.Width / 2 - 40).ToString() + "]");
-                    lockcount = 1;
-                }
-                if (lockcount == 0)
-                {
-                    LeftArmWorking();
-                    RightArmWoking();
-                }
-                else
-                {
-                    if (lockcount == 1)
-                    {
-                        LeftArmWorking();
-                        if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
-                        {
-                            RightArmWoking();
-                        }
-
-                    }
-                    else if (lockcount == 2)
-                    {
-                        RightArmWoking();
-                        if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40)
-                        {
-                            LeftArmWorking();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if ((Convert.ToInt32(FrontCount.Text.ToString()) == 0) && (Convert.ToInt32(MiddleCount.Text.ToString()) == 0))
-                {
-                    if (lockcount == 0)
-                    {
-                        if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
-                        if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                    }
-                    else
-                    {
-                        if (lockcount == 1)
-                        {
-                            if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                            if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
-                            {
-                                if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                            }
-
-                        }
-                        else if (lockcount == 2)
-                        {
-                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                            if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
-                        }
-                    }
-
-                }
-                else
-                {
-                    LockSetting();
-                    if (Convert.ToInt32(FrontCount.Text.ToString()) == 0 || Convert.ToInt32(MiddleCount.Text.ToString()) > 0)
-                    {
-
-                        if (lockcount == 0)
-                        {
-                            if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                            RightArmWoking();
-                            //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                        }
-                        else
-                        {
-                            if (lockcount == 1)
-                            {
-                                if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                                if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
-                                {
-                                    RightArmWoking();
-                                    //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                                }
-
-                            }
-                            else if (lockcount == 2)
-                            {
-                                if (RightArm.seize == 1 || (RightArm.getZZ() >= 0)) { RightArmWoking(); }
-                                if (LeftArm.seize == 1 || (LeftArm.getZX() > 65 && LeftArm.getZZ() == 0) || (LeftArm.getZX() == this.panel2.Width / 2 - 40 && LeftArm.getZZ() >= 0)) { LeftArmWorking(); }
-                            }
-                        }
-
-                    }
-                    if (Convert.ToInt32(FrontCount.Text.ToString()) > 0 || Convert.ToInt32(MiddleCount.Text.ToString()) == 0)
-                    {
-                        if (lockcount == 0)
-                        {
-                            LeftArmWorking();
-                            //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                            if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                        }
-                        else
-                        {
-                            if (lockcount == 1)
-                            {
-                                LeftArmWorking();
-                                //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                                if (RightArm.zaxis_X >= this.panel2.Width / 2 + 25 + 20 || RightArm.parall == 1)
-                                {
-                                    RightArmWoking();
-                                    //if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                                }
-
-                            }
-                            else if (lockcount == 2)
-                            {
-                                if (RightArm.seize == 1 || RightArm.getZX() < this.panel2.Width - 80 || RightArm.getZZ() > 0) { RightArmWoking(); }
-                                if (LeftArm.zaxis_X <= this.panel2.Width / 2 - 40 - 10 || LeftArm.parall == 2)
-                                {
-                                    LeftArmWorking();
-                                    //if (LeftArm.seize == 1 || LeftArm.getZX() > 75 || LeftArm.getZZ() > 10) { LeftArmWorking(); }
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-
-        }
+       
         //左手臂運動
         void LeftArmWorking()
         {
