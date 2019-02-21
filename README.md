@@ -1,7 +1,13 @@
 ﻿CHNAGELOG
+2019-02-21 Franky[0.0.8.0] 
+Added - 加入Home 使手臂回原位
+異動日誌
+2019-02-20 Franky[0.0.7.0] 
+Added - 加入Food Counter 調整流程
+2019-02-19 Franky[0.0.6.2] 
+Added - 調整流程
 2019-02-18 Franky[0.0.6.1] 
 Added - 介面繪圖緩衝建立以利畫面順暢
-異動日誌
 2019-02-15 Franky[0.0.6.1] 
 Added - Food抓取 釋放的流程
 2019-02-15 Franky[0.0.6.0] 
